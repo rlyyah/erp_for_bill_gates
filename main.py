@@ -19,7 +19,7 @@ from crm import crm
 
 
 def choose():
-    inputs = ui.get_inputs(['What is your name? ', 'What is your surname? ', "What is your age? "], "Please provide your personal information")
+    # inputs = ui.get_inputs(['What is your name? ', 'What is your surname? ', "What is your age? "], "Please provide your personal information")
 
     inputs = ui.get_inputs(["Please enter a number: "], "")
     option = inputs[0]
