@@ -19,7 +19,9 @@ import common
 
 
 def handle_menu_inventory_module():
-    options = ["Show table"]
+    options = ["Show table",
+               "Add product to table"]
+
     menu_title = "Store module:"
     exit_message = "Back to main menu"
     ui.print_menu(menu_title, options, exit_message)
@@ -31,8 +33,9 @@ def choose_inventory_module():
     if option == "0":
         return False
     if option == "1":
-        table = 0
-        show_table(table)
+        show_table('/home/acer/Documents/4th-Teamwork-week-ERP-project/lightweight-erp-python-erp_bill_gates_project/inventory/inventory.csv')
+    if option == "2":
+        add('/home/acer/Documents/4th-Teamwork-week-ERP-project/lightweight-erp-python-erp_bill_gates_project/inventory/inventory.csv')
 
 
 def start_module():
@@ -65,7 +68,7 @@ def show_table(table):
     Returns:
         None
     """
-    inv = data_manager.get_table_from_file('/home/acer/Documents/4th-Teamwork-week-ERP-project/lightweight-erp-python-erp_bill_gates_project/inventory/inventory.csv')
+    inv = data_manager.get_table_from_file(table)
     print(inv)
     print()
     for elem in inv:
@@ -85,8 +88,32 @@ def add(table):
     """
 
     # your code
+    new_record = []
+    # adding_new_record_text = '\033[1;34;49m ADDING NEW ALBUM'
+    # adding_new_record_text_alignment = adding_new_record_text.center(60)
+    # print(adding_new_record_text_alignment)
+    # print('\033[0;37;49m ')
+    input_class_list = ['id', 'name', 'manufacturer', 'purchase_year', 'durability']
+    for elem in input_class_list:
+        element = input(f'Input {elem} : ')
+        new_record.append(element)
+    print()
+    new_record_text = 'Your new record is: '
+    print(new_record_text)
+    print()
+    print(new_record)
+    print()
 
-    return table
+    record_to_file = ','.join(new_record)
+    with open(table, 'a+') as fo:
+        print('It has been added to record list')
+        print(record_to_file)
+        fo.writelines('\n' + record_to_file)
+        # fo.writelines('%s' % '\n' + record_to_file)
+        fo.close()
+
+    return new_record           # which one??
+    return table        # this one should be? why return table???
 
 
 def remove(table, id_):
