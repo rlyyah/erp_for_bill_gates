@@ -28,14 +28,16 @@ def handle_menu_inventory_module():
 
 
 def choose_inventory_module():
+    # inv = data_manager.get_table_from_file(table)
+
     inputs = ui.get_inputs(["Please enter a number: "], "")
     option = inputs[0]
     if option == "0":
         return False
     if option == "1":
-        show_table('/home/acer/Documents/4th-Teamwork-week-ERP-project/lightweight-erp-python-erp_bill_gates_project/inventory/inventory.csv')
+        show_table('inventory/inventory.csv')
     if option == "2":
-        add('/home/acer/Documents/4th-Teamwork-week-ERP-project/lightweight-erp-python-erp_bill_gates_project/inventory/inventory.csv')
+        add('inventory/inventory.csv')
 
 
 def start_module():
@@ -54,7 +56,7 @@ def start_module():
             is_running = choose_inventory_module()
         except KeyError as err:
             ui.print_error_message(str(err))
-    print('I am in inventory module')
+    print('I am in inventory module')   # delete in future!!
     # your code
 
 
@@ -73,6 +75,8 @@ def show_table(table):
     print()
     for elem in inv:
         print(elem)
+
+    # ui.print_table(table, title_list)     # use in future!!
     # your code
 
 
@@ -93,6 +97,11 @@ def add(table):
     # adding_new_record_text_alignment = adding_new_record_text.center(60)
     # print(adding_new_record_text_alignment)
     # print('\033[0;37;49m ')
+
+    # use in future!!
+    # id = common.generate_random(table)
+    # input_class_list = [id, 'name', 'manufacturer', 'purchase_year', 'durability']
+    
     input_class_list = ['id', 'name', 'manufacturer', 'purchase_year', 'durability']
     for elem in input_class_list:
         element = input(f'Input {elem} : ')
@@ -104,6 +113,17 @@ def add(table):
     print(new_record)
     print()
 
+    # inv = data_manager.get_table_from_file(table)
+
+    # record_to_file = ','.join(new_record)
+    # print('r to file:      ', record_to_file)
+    
+    # table.append(record_to_file)
+    # data_manager.write_table_to_file(inv, table)
+    # show_table(table)
+
+    # return table
+    
     record_to_file = ','.join(new_record)
     with open(table, 'a+') as fo:
         print('It has been added to record list')
