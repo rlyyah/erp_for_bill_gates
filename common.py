@@ -8,7 +8,7 @@ import random
 # variables for generating random id
 numbers = '0123456789'
 letters = 'abcdefghijklmnoprstuwxyz'
-sings = "!#$%&'()*+,-./:_<=>?@][`^{|}~"
+signs = "!#$%&'()*+,-./:_<=>?@][`^{|}~"
 id_index = 0
 
 
@@ -16,11 +16,10 @@ id_index = 0
 def create_id():
     elem_id1 = ''.join(random.sample(numbers, 2))
     elem_id2 = ''.join(random.sample(letters, 2))
-    elem_id3 = ''.join(random.sample(sings, 2))
+    elem_id3 = ''.join(random.sample(signs, 2))
     elem_id4 = ''.join(random.sample(letters, 2)).upper()
     id = elem_id1 + elem_id2 + elem_id3 + elem_id4
     return id
-
 
 
 def generate_random(table):
@@ -36,14 +35,13 @@ def generate_random(table):
         string: Random and unique string
     """
 
-    generated = ''
+    generated_id = ''
     id_table = [line[id_index] for line in table]
-    generated = create_id()
+    generated_id = create_id()
     if id in id_table:
         generate_random(table)
     else:
-        return generated
-
+        return generated_id
 
     # your code
 
