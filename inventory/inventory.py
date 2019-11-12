@@ -18,6 +18,20 @@ import data_manager
 import common
 
 
+def handle_menu_inventory_module():
+    options = ["Show all"]
+    menu_title = "Store module"
+    exit_message = "Back to main menu"
+    ui.print_menu(menu_title, options, exit_message)
+
+
+def choose_inventory_module():
+    inputs = ui.get_inputs(["Please enter a number: "], "")
+    option = inputs[0]
+    if option == "0":
+        return False
+
+
 def start_module():
     """
     Starts this module and displays its menu.
@@ -27,7 +41,14 @@ def start_module():
     Returns:
         None
     """
-
+    is_running = True
+    while is_running:
+        handle_menu_inventory_module()
+        try:
+            is_running = choose_inventory_module()
+        except KeyError as err:
+            ui.print_error_message(str(err))
+    print('jestem w inventory module')
     # your code
 
 
