@@ -19,8 +19,8 @@ import common
 
 
 def handle_menu_inventory_module():
-    options = ["Show all"]
-    menu_title = "Store module"
+    options = ["Show table"]
+    menu_title = "Store module:"
     exit_message = "Back to main menu"
     ui.print_menu(menu_title, options, exit_message)
 
@@ -30,6 +30,9 @@ def choose_inventory_module():
     option = inputs[0]
     if option == "0":
         return False
+    if option == "1":
+        table = 0
+        show_table(table)
 
 
 def start_module():
@@ -48,7 +51,7 @@ def start_module():
             is_running = choose_inventory_module()
         except KeyError as err:
             ui.print_error_message(str(err))
-    print('jestem w inventory module')
+    print('I am in inventory module')
     # your code
 
 
@@ -62,7 +65,11 @@ def show_table(table):
     Returns:
         None
     """
-
+    inv = data_manager.get_table_from_file('/home/acer/Documents/4th-Teamwork-week-ERP-project/lightweight-erp-python-erp_bill_gates_project/inventory/inventory.csv')
+    print(inv)
+    print()
+    for elem in inv:
+        print(elem)
     # your code
 
 
