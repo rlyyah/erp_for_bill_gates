@@ -38,8 +38,11 @@ def choose_inventory_module():
     if option == "0":
         return False
     if option == "1":
+        show_table(data_manager.get_table_from_file(FILE_PATH))     # ONLY THIS NEEDEd TO PRINT TABLE RIGHT NOW
+        # display_table = show_table(data_manager.get_table_from_file(FILE_PATH))
+        # ui.print_table(display_table, TITLE_LIST)
         # ui.print_table(show_table(inventory), TITLE_LIST)
-        ui.print_table(show_table(FILE_PATH), TITLE_LIST)
+        # ui.print_table(show_table(FILE_PATH), TITLE_LIST)     # UNCOMMENT TO WORK - VERSION 1
     if option == "2":
         # add('inventory/inventory.csv')
         ui.print_table(add(FILE_PATH), TITLE_LIST)
@@ -75,7 +78,7 @@ def show_table(table):
     Returns:
         None
     """
-    inv = data_manager.get_table_from_file(table)
+    # inv = data_manager.get_table_from_file(table)     # UNCOMMENT TO WORK - VERSION 1
     # print(inv)            # 2 versions of printing
     # print()
     # for elem in inv:
@@ -86,8 +89,13 @@ def show_table(table):
 
     # for i in range(1, 11):        # printing in one line example
     #     print(i, end='')
-    return inv
+    # return inv    # UNCOMMENT TO WORK - VERSION 1
+    TITLE_LIST = [id, 'name', 'manufacturer', 'purchase_year', 'durability']
+    ui.print_table(table, TITLE_LIST)
 
+    # FILE_PATH = 'inventory/inventory.csv'
+    # inventory = data_manager.get_table_from_file(FILE_PATH)
+    # table = data_manager.get_table_from_file(table)     # UNCOMMENT TO WORK - VERSION 1
     # ui.print_table(table, title_list)     # use in future!!
 
 
@@ -163,21 +171,21 @@ def remove(table, id_):
     """
 
     # your code
-    for elem in inv:
-        print(elem)
+    # for elem in inv:
+    #     print(elem)
 
-    show_table(table)
-    line_number = input_mod.number_with_terms('Line: ', 'Please provide number of line you want to remove',
-                                    range(1, (len(table) + 1)))
-    id_ = common.convert_input_to_id(table, line_number)
-    for line in table:
-        if line[0] == id_:
-            table.remove(line)
-    data_manager.write_table_to_file(file_name, table)
-    show_table(table)
-    return table
+    # show_table(table)
+    # line_number = input_mod.number_with_terms('Line: ', 'Please provide number of line you want to remove',
+    #                                 range(1, (len(table) + 1)))
+    # id_ = common.convert_input_to_id(table, line_number)
+    # for line in table:
+    #     if line[0] == id_:
+    #         table.remove(line)
+    # data_manager.write_table_to_file(file_name, table)
+    # show_table(table)
+    # return table
 
-    return table
+    # return table
 
 
 def update(table, id_):
