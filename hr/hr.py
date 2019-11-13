@@ -17,6 +17,14 @@ import common
 
 
 def start_module():
+    is_running = True
+    while is_running:
+        handle_menu()
+        try:
+            is_running = choose()
+        except KeyError as err:
+            ui.print_error_message(str(err))
+    print('jestem w hr module')
     """
     Starts this module and displays its menu.
      * User can access default special features from here.
@@ -28,6 +36,20 @@ def start_module():
 
     # your code
 
+
+def handle_menu():
+    options = ["Show all"]
+    menu_title = "Store module"
+    exit_message = "Back to main menu"
+    ui.print_menu(menu_title, options, exit_message)
+
+
+def choose():
+    inputs = ui.get_inputs(["Please enter a number: "], "")
+    option = inputs[0]
+    if option == "0":
+        return False
+    
 
 def show_table(table):
     """
