@@ -30,7 +30,7 @@ def generate_random(table):
 
     Args:
         table (list): Data table to work on. First columns containing the keys.
-        
+
     Returns:
         string: Random and unique string
     """
@@ -46,3 +46,5 @@ def generate_random(table):
     # your code
 
     
+def clear_terminal():
+    print("\033c")

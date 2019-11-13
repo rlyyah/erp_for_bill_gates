@@ -29,28 +29,29 @@ def handle_menu_inventory_module():
 
 
 def choose_inventory_module():
-    # inv = data_manager.get_table_from_file(table) 
     FILE_PATH = 'inventory/inventory.csv'
     TITLE_LIST = [id, 'name', 'manufacturer', 'purchase_year', 'durability']
-    inventory = data_manager.get_table_from_file(FILE_PATH)
 
     inputs = ui.get_inputs(["Please enter a number: "], "")
     option = inputs[0]
     if option == "0":
         return False
     if option == "1":
+        common.clear_terminal()
+        ui.blank_line()
+        ui.headline('---- TABLE WITH INVENTORY ----')
         show_table(data_manager.get_table_from_file(FILE_PATH))     # ONLY THIS NEEDEd TO PRINT TABLE RIGHT NOW
-        # display_table = show_table(data_manager.get_table_from_file(FILE_PATH))
-        # ui.print_table(display_table, TITLE_LIST)
-        # ui.print_table(show_table(inventory), TITLE_LIST)
-        # ui.print_table(show_table(FILE_PATH), TITLE_LIST)     # UNCOMMENT TO WORK - VERSION 1
     elif option == "2":
         # list_from_file = data_manager.get_table_from_file(FILE_PATH)
         # data_manager.write_table_to_file(FILE_PATH, add(list_from_file))
+        common.clear_terminal()
+        ui.blank_line()
         data_manager.write_table_to_file(FILE_PATH, add(data_manager.get_table_from_file(FILE_PATH)))     # same as above but in one line
     if option == "3":
+        common.clear_terminal()
+        ui.headline('---- TABLE WITH INVENTORY ----')
         table = data_manager.get_table_from_file(FILE_PATH)
-        ui.print_table(table, "where is it?")  # second parameter not used yet TODO
+        # ui.print_table(table, "where is it?")  # second parameter not used yet TODO
         ui.print_enumerate_table(table)
         ui.blank_line()
         ui.blank_line()
@@ -91,8 +92,6 @@ def start_module():
             is_running = choose_inventory_module()
         except KeyError as err:
             ui.print_error_message(str(err))
-    # print('I am in inventory module')   # delete in future!!
-    # your code
 
 
 def show_table(table):
@@ -105,12 +104,8 @@ def show_table(table):
     Returns:
         None
     """
-    # return inv    # UNCOMMENT TO WORK - VERSION 1
     TITLE_LIST = [id, 'name', 'manufacturer', 'purchase_year', 'durability']
     ui.print_table(table, TITLE_LIST)
-
-    # table = data_manager.get_table_from_file(table)     # UNCOMMENT TO WORK - VERSION 1
-    # ui.print_table(table, title_list)     # use in future!!
 
 
 def add(table):
@@ -125,7 +120,7 @@ def add(table):
     """
 
     # -------------------------------------------------------------------------
-    # ----------------------- THIS WORKS BUT IS NOT PERFECT ------------------------------------------------
+    # ----------------------- THIS WORKS BUT IS NOT GOOD ENOUGH ------------------------------------------------
     # new_record = []
     # input_class_list = ['id', 'name', 'manufacturer', 'purchase_year', 'durability']
     # for elem in input_class_list:
@@ -176,26 +171,6 @@ def remove(table, id_):
     Returns:
         list: Table without specified record.
     """
-
-    # your code
-    # for elem in inv:
-    #     print(elem)
-
-    # show_table(table)
-    # line_number = input_mod.number_with_terms('Line: ', 'Please provide number of line you want to remove',
-    #                                 range(1, (len(table) + 1)))
-    # id_ = common.convert_input_to_id(table, line_number)
-    # for line in table:
-    #     if line[0] == id_:
-    #         table.remove(line)
-    # data_manager.write_table_to_file(file_name, table)
-    # show_table(table)
-    # return table
-
-    # return table
-    # FILE_PATH = 'inventory/inventory.csv'
-    # table = data_manager.get_table_from_file(FILE_PATH)
-    # ui.print_enumerate_table(table)
 
     ID_POSITION = 0
     for index, record in enumerate(table):
