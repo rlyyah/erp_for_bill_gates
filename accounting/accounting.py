@@ -18,6 +18,41 @@ import data_manager
 # common module
 import common
 
+FILE_PATH = 'accounting/items.csv'
+
+def choose():
+    # inputs = ui.get_inputs(['What is your name? ', 'What is your surname? ', "What is your age? "], "Please provide your personal information")
+
+    inputs = ui.get_inputs(["Please enter a number: "], "")
+    option = inputs[0]
+    if option == "1":
+        show_table(data_manager.get_table_from_file(FILE_PATH))
+    elif option == "2":
+        add('')
+    elif option == "3":
+        remove('','')
+    elif option == "4":
+        update('','')
+    elif option == "5":
+        which_year_max('')
+    elif option == "6":
+        avg_amount('','')
+    elif option == "0":
+        return False
+    else:
+        raise KeyError("There is no such option.")
+
+
+def handle_menu():
+    options = ["Show Table",
+               "Add",
+               "Remove",
+               "Update",
+               "Which year max",
+               "Average amount"]
+
+    ui.print_menu("Accounting Module", options, "Back to main menu")
+
 
 def start_module():
     """
@@ -28,8 +63,14 @@ def start_module():
     Returns:
         None
     """
-    s = 'hi'
-    # you code
+    is_running = True
+    while is_running:
+        handle_menu()
+        try:
+            is_running = choose()
+        except KeyError as err:
+            ui.print_error_message(str(err))
+    # DONE
 
 
 def show_table(table):
