@@ -28,7 +28,7 @@ def start_module():
     Returns:
         None
     """
-
+    s = 'hi'
     # you code
 
 
