@@ -18,17 +18,17 @@ import data_manager
 # common module
 import common
 
-FILE_PATH = 'accounting/items.csv'
+DATA_TABLE_STRUCTURE = ['id','month','day','year','type[in = income, out = outflow]','amount']
 
 def choose():
     # inputs = ui.get_inputs(['What is your name? ', 'What is your surname? ', "What is your age? "], "Please provide your personal information")
-
+    FILE_PATH = 'accounting/items.csv'
     inputs = ui.get_inputs(["Please enter a number: "], "")
     option = inputs[0]
     if option == "1":
         show_table(data_manager.get_table_from_file(FILE_PATH))
     elif option == "2":
-        add('')
+        add(data_manager.get_table_from_file(FILE_PATH))
     elif option == "3":
         remove('','')
     elif option == "4":
@@ -41,6 +41,7 @@ def choose():
         return False
     else:
         raise KeyError("There is no such option.")
+    return True
 
 
 def handle_menu():
@@ -83,7 +84,7 @@ def show_table(table):
     Returns:
         None
     """
-    ui.print_table(table)
+    ui.print_table(table,'Accounting')
     # your code
 
 
