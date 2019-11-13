@@ -28,14 +28,17 @@ def handle_menu_inventory_module():
 
 
 def choose_inventory_module():
-    # inv = data_manager.get_table_from_file(table)
+    # inv = data_manager.get_table_from_file(table) 
+
+    title_list = [id, 'name', 'manufacturer', 'purchase_year', 'durability']
 
     inputs = ui.get_inputs(["Please enter a number: "], "")
     option = inputs[0]
     if option == "0":
         return False
     if option == "1":
-        show_table('inventory/inventory.csv')
+        # ui.print_table(show_table('inventory/inventory.csv'), '')
+        ui.print_table(show_table('inventory/inventory.csv'), title_list)
     if option == "2":
         add('inventory/inventory.csv')
 
@@ -71,13 +74,17 @@ def show_table(table):
         None
     """
     inv = data_manager.get_table_from_file(table)
+    # print(inv)            # 2 versions of printing
+    # print()
+    # for elem in inv:
+        # print(elem)
     print(inv)
     print()
-    for elem in inv:
-        print(elem)
+    # for i in range(1, 11):        # printing in one line example
+    #     print(i, end='')
+    return inv
 
     # ui.print_table(table, title_list)     # use in future!!
-    # your code
 
 
 def add(table):
@@ -131,6 +138,8 @@ def add(table):
         fo.writelines('\n' + record_to_file)
         # fo.writelines('%s' % '\n' + record_to_file)
         fo.close()
+
+    
 
     return new_record           # which one??
     return table        # this one should be? why return table???
