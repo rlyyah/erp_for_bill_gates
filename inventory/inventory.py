@@ -22,25 +22,27 @@ def handle_menu_inventory_module():
     options = ["Show table",
                "Add product to table"]
 
-    menu_title = "Store module:"
+    menu_title = "Inventory module:"
     exit_message = "Back to main menu"
     ui.print_menu(menu_title, options, exit_message)
 
 
 def choose_inventory_module():
     # inv = data_manager.get_table_from_file(table) 
-
-    title_list = [id, 'name', 'manufacturer', 'purchase_year', 'durability']
+    FILE_PATH = 'inventory/inventory.csv'
+    TITLE_LIST = [id, 'name', 'manufacturer', 'purchase_year', 'durability']
+    inventory = data_manager.get_table_from_file(FILE_PATH)
 
     inputs = ui.get_inputs(["Please enter a number: "], "")
     option = inputs[0]
     if option == "0":
         return False
     if option == "1":
-        # ui.print_table(show_table('inventory/inventory.csv'), '')
-        ui.print_table(show_table('inventory/inventory.csv'), title_list)
+        # ui.print_table(show_table(inventory), TITLE_LIST)
+        ui.print_table(show_table(FILE_PATH), TITLE_LIST)
     if option == "2":
-        add('inventory/inventory.csv')
+        # add('inventory/inventory.csv')
+        ui.print_table(add(FILE_PATH), TITLE_LIST)
 
 
 def start_module():
@@ -78,8 +80,10 @@ def show_table(table):
     # print()
     # for elem in inv:
         # print(elem)
-    print(inv)
-    print()
+
+    # print(inv)
+    # print()
+
     # for i in range(1, 11):        # printing in one line example
     #     print(i, end='')
     return inv
@@ -139,10 +143,11 @@ def add(table):
         # fo.writelines('%s' % '\n' + record_to_file)
         fo.close()
 
-    
+    inv = data_manager.get_table_from_file(table)
+    return inv
 
-    return new_record           # which one??
-    return table        # this one should be? why return table???
+    # return new_record           # which one??
+    # return table        # this one should be? why return table???
 
 
 def remove(table, id_):
@@ -158,6 +163,19 @@ def remove(table, id_):
     """
 
     # your code
+    for elem in inv:
+        print(elem)
+
+    show_table(table)
+    line_number = input_mod.number_with_terms('Line: ', 'Please provide number of line you want to remove',
+                                    range(1, (len(table) + 1)))
+    id_ = common.convert_input_to_id(table, line_number)
+    for line in table:
+        if line[0] == id_:
+            table.remove(line)
+    data_manager.write_table_to_file(file_name, table)
+    show_table(table)
+    return table
 
     return table
 
