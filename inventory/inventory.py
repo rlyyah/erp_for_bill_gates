@@ -124,14 +124,7 @@ def add(table):
         list: Table with a new record
     """
 
-    # adding_new_record_text = '\033[1;34;49m ADDING NEW ALBUM'
-    # adding_new_record_text_alignment = adding_new_record_text.center(60)
-    # print(adding_new_record_text_alignment)
-    # print('\033[0;37;49m ')
     # -------------------------------------------------------------------------
-    # use in future!!
-    # id = common.generate_random(table)
-    # input_class_list = [id, 'name', 'manufacturer', 'purchase_year', 'durability']
     # ----------------------- THIS WORKS BUT IS NOT PERFECT ------------------------------------------------
     # new_record = []
     # input_class_list = ['id', 'name', 'manufacturer', 'purchase_year', 'durability']
@@ -157,11 +150,16 @@ def add(table):
     # return inv
 
     # return table        # this one should be? why return table???
+    # -------------------------------------------------------------------------
     # ----------------------- BETTER ------------------------------------------------
     ui.headline('Adding item to inventory')
 
-    TITLE_LIST = ['id: ', 'What is the item? ', 'Who manufactured the item? ', 'What is the purchase year? [year]', 'What is the durability? [year] ']
+    id = common.generate_random(table)
+    # without id!!!!! :
+    # TITLE_LIST = ['id: ', 'What is the item? ', 'Who manufactured the item? ', 'What is the purchase year? [year]', 'What is the durability? [year] ']
+    TITLE_LIST = ['What is the item? ', 'Who manufactured the item? ', 'What is the purchase year? [year]', 'What is the durability? [year] ']
     ask_input = ui.get_inputs(TITLE_LIST, 'Please enter information about an item')
+    ask_input.insert(0, id)
     table.append(ask_input)
 
     return table
@@ -199,7 +197,6 @@ def remove(table, id_):
     # table = data_manager.get_table_from_file(FILE_PATH)
     # ui.print_enumerate_table(table)
 
-    
     ID_POSITION = 0
     for index, record in enumerate(table):
         if record[ID_POSITION] == id_:

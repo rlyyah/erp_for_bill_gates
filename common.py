@@ -4,6 +4,23 @@ implement commonly used functions here
 
 import random
 
+# FUNCTIONS TO CREATE ID
+# variables for generating random id
+numbers = '0123456789'
+letters = 'abcdefghijklmnoprstuwxyz'
+signs = "!#$%&'()*+,-./:_<=>?@][`^{|}~"
+id_index = 0
+
+
+# creates id
+def create_id():
+    elem_id1 = ''.join(random.sample(numbers, 2))
+    elem_id2 = ''.join(random.sample(letters, 2))
+    elem_id3 = ''.join(random.sample(signs, 2))
+    elem_id4 = ''.join(random.sample(letters, 2)).upper()
+    id = elem_id1 + elem_id2 + elem_id3 + elem_id4
+    return id
+
 
 def generate_random(table):
     """
@@ -13,13 +30,19 @@ def generate_random(table):
 
     Args:
         table (list): Data table to work on. First columns containing the keys.
-
+        
     Returns:
         string: Random and unique string
     """
 
-    generated = ''
+    generated_id = ''
+    id_table = [line[id_index] for line in table]
+    generated_id = create_id()
+    if id in id_table:
+        generate_random(table)
+    else:
+        return generated_id
 
     # your code
 
-    return generated
+    
