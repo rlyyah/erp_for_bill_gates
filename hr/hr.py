@@ -24,7 +24,6 @@ def start_module():
             is_running = choose()
         except KeyError as err:
             ui.print_error_message(str(err))
-    print('jestem w hr module')
     """
     Starts this module and displays its menu.
      * User can access default special features from here.
@@ -38,8 +37,8 @@ def start_module():
 
 
 def handle_menu():
-    options = ["Show all"]
-    menu_title = "Store module"
+    options = ["Show table", "Add new item", "Update item", "Remove item", "Get oldest person", "Get persons closest to average"]
+    menu_title = "HR module"
     exit_message = "Back to main menu"
     ui.print_menu(menu_title, options, exit_message)
 
@@ -47,11 +46,27 @@ def handle_menu():
 def choose():
     inputs = ui.get_inputs(["Please enter a number: "], "")
     option = inputs[0]
-    if option == "0":
-        return False
+    if option == "1":
+        show_table(table)
+    elif option == "2":
+        add()
+    elif option == "3":
+        update()
+    elif option == "4":
+        remove()
+    elif option == "5":
+        get_oldest_person(table)
+    elif option == "6":
+        get_persons_closest_to_average(table)
+    elif option == "0":
+        sys.exit(0)
+    else:
+        raise KeyError("There is no such option.")
     
 
 def show_table(table):
+    print("show table")
+    start_module()
     """
     Display a table
 
