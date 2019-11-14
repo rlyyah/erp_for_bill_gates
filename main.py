@@ -1,11 +1,10 @@
 # Do not modify this file
 # run this program (the ERP software) from the terminal from thd root directory of this project
 
-
 import sys
 import ui  # User Interface
 # Store module
-from store import store
+#from store import store
 # Human Resources module
 from hr import hr
 # Tool manager module
@@ -15,7 +14,7 @@ from accounting import accounting
 # Sales module
 from sales import sales
 # Customer Relationship Management (CRM) module
-from crm import crm
+#from crm import crm
 
 
 def choose():
