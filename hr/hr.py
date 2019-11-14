@@ -35,12 +35,6 @@ def start_module():
 
     # your code
 
-def find_id(table, index):
-    INDEX_POSITION = 0
-    number_of_id = table[int(index[0])][INDEX_POSITION]
-    return number_of_id
-
-
 
 def handle_menu():
     options = ["Show table", "Add new item", "Update item", "Remove item", "Get oldest person", "Get persons closest to average"]
@@ -64,12 +58,12 @@ def choose():
     elif option == "4":
         common.clear_terminal()
         ui.headline('----  Persons Table  ----')
-        # table = data_manager.get_table_from_file(table)
+        table = data_manager.get_table_from_file("hr/persons.csv")
         ui.print_enumerate_table(table)
         ui.blank_line()
         ui.blank_line()
         ui.headline('Removing person from list')
-        data_manager.write_table_to_file(table, remove(table, find_id(table, ui.get_inputs(['Insert index of file to remove'], "REMOVE"))))
+        data_manager.write_table_to_file("hr/persons.csv", remove(table, find_id(table, ui.get_inputs(['Insert index of file to remove'], "REMOVE"))))
         
     elif option == "5":
         get_oldest_person(table)
@@ -80,7 +74,12 @@ def choose():
         sys.exit(0)
     else:
         raise KeyError("There is no such option.")
-    
+
+
+def find_id(table, index):
+    INDEX_POSITION = 0
+    number_of_id = table[int(index[0])-1][INDEX_POSITION]
+    return number_of_id   
 
 def show_table(table):
     TITLE_LIST = [id, 'name', 'year']
@@ -103,7 +102,7 @@ def add(table):
     # path = data_manager.get_table_from_file("hr/persons.csv")
     table = data_manager.get_table_from_file("hr/persons.csv")
     id = common.generate_random(table)
-    TITLE_LIST = ['What is ID? ', 'What is name? ', 'What is born year?']
+    TITLE_LIST = ['What is name? ', 'What is born year?']
     ask_input = ui.get_inputs(TITLE_LIST, 'Please enter information about a person')
     ask_input.insert(0, id)
     table.append(ask_input)
@@ -126,7 +125,7 @@ def remove(table, id_):
     ID_POSITION = 0
     for index, record in enumerate(table):
         if record[ID_POSITION] == id_:
-            table.pop(index - 1)
+            table.pop(index)
 
     return table
     """
@@ -166,6 +165,17 @@ def update(table, id_):
 # ------------------
 
 def get_oldest_person(table):
+    max = 99999
+    year_list = []
+    for i in range(len(table)):
+        year_list.append(int(table[i][2]))
+    for i in range(len(year_list)):
+        if year_list[i] < max:
+            max = year_list[i]
+            name = table[i][1]
+        #if max in year_list
+    print(max, name)
+    return year_list
     """
     Question: Who is the oldest person?
 
@@ -180,6 +190,12 @@ def get_oldest_person(table):
 
 
 def get_persons_closest_to_average(table):
+    year_list = get_oldest_person(table)
+    sum = 0
+    for ele in year_list:
+        sum = sum + ele
+    averega_years = sum / len(year_list)
+    print(sum, averega_years)
     """
     Question: Who is the closest to the average age?
 
