@@ -78,7 +78,7 @@ def choose():
         sys.exit(0)
     while option not in OPTION:
         raise KeyError
-        menu_control()
+        #menu_control()
 
 
 # Main store module
@@ -154,7 +154,6 @@ def update(table, id_):
         list: table with updated record
     """
 
-def update(table, id_):
     module_headers = ["Title: ", "Manufacturer: ", "Price: ", "In stock: "]
     return common.common_update(table, id_, "inventory/inventory.csv", module_headers)
 
