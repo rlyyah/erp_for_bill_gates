@@ -41,7 +41,7 @@ def choose_inventory_module():
     option = inputs[INDEX_OF_FIRST_ELEMENT_OF_INPUTS_LIST]
     if option == "0":
         return False
-    if option == "1":
+    elif option == "1":
         common.clear_terminal()
         ui.blank_line()
         ui.headline('---- TABLE WITH INVENTORY ----')
@@ -53,7 +53,7 @@ def choose_inventory_module():
         common.clear_terminal()
         ui.blank_line()
         data_manager.write_table_to_file(FILE_PATH, add(data_manager.get_table_from_file(FILE_PATH)))     # same as above but in one line
-    if option == "3":
+    elif option == "3":
         common.clear_terminal()
         ui.headline('---- TABLE WITH INVENTORY ----')
         table = data_manager.get_table_from_file(FILE_PATH)
@@ -65,7 +65,7 @@ def choose_inventory_module():
         # header = ui.headline('Removing item from inventory')
         data_manager.write_table_to_file(FILE_PATH, remove(table, find_id(table, ui.get_inputs(['Insert index of file to remove'], "REMOVE"))))
         # data_manager.write_table_to_file(FILE_PATH, remove(table, find_id(table, ui.get_inputs(['Insert index of file to remove'], header))))
-    if option == "4":
+    elif option == "4":
         common.clear_terminal()
         ui.blank_line()
         ui.blank_line()
@@ -73,7 +73,7 @@ def choose_inventory_module():
         table = data_manager.get_table_from_file(FILE_PATH)
         ui.print_enumerate_table(table)
         data_manager.write_table_to_file(FILE_PATH, update(table, find_id(table, ui.get_inputs(['Insert index of file to update'], "UPDATING"))))
-    if option == "5":
+    elif option == "5":
         common.clear_terminal()
         ui.headline('GETTING AVAILABLE ITEMS')
         TITLE_LIST = ['']
@@ -84,7 +84,7 @@ def choose_inventory_module():
         ui.headline('ITEMS THAT MEETS YOUR CONDITIONS')
         ui.blank_line()
         show_table(get_available_items(table, year))
-    if option == "6":
+    elif option == "6":
         common.clear_terminal()
         ui.blank_line()
         ui.blank_line()
