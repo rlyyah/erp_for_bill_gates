@@ -50,11 +50,24 @@ def choose():
     if option == "1":
         show_table(path)
     elif option == "2":
+        common.clear_terminal()
+        ui.blank_line()
+        data_manager.write_table_to_file(FILE_PATH, add(data_manager.get_table_from_file(FILE_PATH)))
         add(path)
     elif option == "3":
         update()
     elif option == "4":
-        remove()
+        common.clear_terminal()
+        ui.headline('---- TABLE WITH INVENTORY ----')
+        table = data_manager.get_table_from_file(FILE_PATH)
+        # ui.print_table(table, "where is it?")  # second parameter not used yet TODO
+        ui.print_enumerate_table(table)
+        ui.blank_line()
+        ui.blank_line()
+        ui.headline('Removing item from inventory')
+        # header = ui.headline('Removing item from inventory')
+        data_manager.write_table_to_file(FILE_PATH, remove(table, find_id(table, ui.get_inputs(['Insert index of file to remove'], "REMOVE"))))
+        
     elif option == "5":
         get_oldest_person(table)
     elif option == "6":
@@ -107,6 +120,12 @@ def add(table):
 
 
 def remove(table, id_):
+    D_POSITION = 0
+    for index, record in enumerate(table):
+        if record[ID_POSITION] == id_:
+            table.pop(index - 1)
+
+    return table
     """
     Remove a record with a given id from the table.
 
