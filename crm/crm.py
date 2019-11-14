@@ -14,7 +14,7 @@ import ui
 import data_manager
 # common module
 import common
-import input_mod
+
 
 
 # general variables
@@ -57,7 +57,7 @@ def choose():
     and starts options from module.
     No arg
     Returns nothing"""
-    inputs = input_mod.get_inputs(['Enter a number: '], '')
+    inputs = ui.get_inputs(['Enter a number: '], '')
     option = inputs[0]
     if option == "1":
         show_table(table)
@@ -122,13 +122,8 @@ def add(table):
         list: Table with a new record
     """
 
-    id = common.generate_random(table)
-    record = [id, input_mod.name('Name: ', 'Provide data to add'), input_mod.email('Email: ', ''),
-              input_mod.specific('Subscription: ', '', ['0', '1'], 'Provide 1(yes) or 0(no)')]
-    table.append(record)
-    data_manager.write_table_to_file(file_name, table)
-    show_table(table)
-    return table
+    module_headers = ["Name: ", "E-mail: ", "Subscribed: "]
+    return common.common_add(table, module_headers)
 
 
 # removes record from table
@@ -141,16 +136,8 @@ def remove(table, id_):
     Returns:
         list: Table without specified record.
     """
-    show_table(table)
-    line_number = input_mod.number_with_terms('Line: ', 'Please provide number of line you want to remove',
-                                       range(1, (len(table) + 1)))
-    id_ = common.convert_input_to_id(table, line_number)
-    for line in table:
-        if line[0] == id_:
-            table.remove(line)
-    data_manager.write_table_to_file(file_name, table)
-    show_table(table)
-    return table
+
+    return common.common_remove(table, id_, "crm/customers.csv")
 
 
 # updates record in table
@@ -164,18 +151,8 @@ def update(table, id_):
         list: table with updated record
     """
 
-    line_number = input_mod.number_with_terms('Line: ', 'Please provide number of line you want to update',
-                                       range(1, (len(table) + 1)))
-    id_ = common.convert_input_to_id(table, line_number)
-    line_data = input_mod.number_with_terms(details_update_list_labels, detail_update_title, range(1, 6))
-    dict_update = {1: input_mod.name, 2: input_mod.number, 3: input_mod.month, 4: input_mod.day, 5: input_mod.year}
-    new_record = input_mod.get_inputs(['New data: '], 'Please provide new data')[0]
-    for number, line in enumerate(table):
-        if line[0] == id_:
-            table[number][line_data] = new_record
-    data_manager.write_table_to_file(file_name, table)
-    show_table(table)
-    return table
+    module_headers = ["Name: ", "E-mail: ", "Subscribed: "]
+    return common.common_update(table, id_, "crm/customers.csv", module_headers)
 
 
 # function returns id of longest name in reverse alphabetical order
