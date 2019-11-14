@@ -50,7 +50,7 @@ def choose():
     if option == "1":
         show_table(path)
     elif option == "2":
-        add()
+        add(path)
     elif option == "3":
         update()
     elif option == "4":
@@ -82,6 +82,15 @@ def show_table(table):
 
 
 def add(table):
+    ui.headline('Adding item to inventory')
+
+    id = common.generate_random(table)
+    # without id!!!!! :
+    # TITLE_LIST = ['id: ', 'What is the item? ', 'Who manufactured the item? ', 'What is the purchase year? [year]', 'What is the durability? [year] ']
+    TITLE_LIST = ['What is ID? ', 'What is name? ', 'What is born year?']
+    ask_input = ui.get_inputs(TITLE_LIST, 'Please enter information about a person')
+    ask_input.insert(0, id)
+    table.append(ask_input)
     """
     Asks user for input and adds it into the table.
 
