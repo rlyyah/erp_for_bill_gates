@@ -15,7 +15,6 @@ from accounting import accounting
 from sales import sales
 # Customer Relationship Management (CRM) module
 #from crm import crm
-from store import store
 
 
 def choose():
