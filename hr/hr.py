@@ -44,26 +44,26 @@ def handle_menu():
 
 
 def choose():
-    path = data_manager.get_table_from_file("hr/persons.csv")
+    table = data_manager.get_table_from_file("hr/persons.csv")
     inputs = ui.get_inputs(["Please enter a number: "], "")
     option = inputs[0]
     if option == "1":
-        show_table(path)
+        show_table(table)
     elif option == "2":
         common.clear_terminal()
         ui.blank_line()
-        data_manager.write_table_to_file(path, add(path))
+        data_manager.write_table_to_file("hr/persons.csv", add(table))
     elif option == "3":
         update()
     elif option == "4":
         common.clear_terminal()
         ui.headline('----  Persons Table  ----')
-        table = data_manager.get_table_from_file(path)
+        # table = data_manager.get_table_from_file(table)
         ui.print_enumerate_table(table)
         ui.blank_line()
         ui.blank_line()
         ui.headline('Removing person from list')
-        data_manager.write_table_to_file(path, remove(table, find_id(table, ui.get_inputs(['Insert index of file to remove'], "REMOVE"))))
+        data_manager.write_table_to_file(table, remove(table, find_id(table, ui.get_inputs(['Insert index of file to remove'], "REMOVE"))))
         
     elif option == "5":
         get_oldest_person(table)
