@@ -22,7 +22,8 @@ def print_table(table, title_list):
         None: This function doesn't return anything it only prints to console.
     """
     print(table)
-    # your goes code
+    # your goes code bal balalsad
+    # testing merging
 
 
 def print_result(result, label):
@@ -66,7 +67,6 @@ def print_menu(title, list_options, exit_message):
         print('    ({}) {}'.format(index + 1, element))
     print('    (0) {}'.format(exit_message))
     # your code
-    # Line added to test development branch!
 
 
 def get_inputs(list_labels, title):
@@ -79,6 +79,7 @@ def get_inputs(list_labels, title):
         Name <user_input_1>
         Surname <user_input_2>
         Age <user_input_3>
+
     Args:
         list_labels (list): labels of inputs
         title (string): title of the "input section"
@@ -94,7 +95,7 @@ def get_inputs(list_labels, title):
         print(label)
         user_input = input()
         inputs.append(user_input)
-    # print(inputs)
+    print(inputs)
     return inputs
 
 

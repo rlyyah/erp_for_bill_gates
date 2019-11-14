@@ -18,6 +18,49 @@ import data_manager
 # common module
 import common
 
+DATA_TABLE_STRUCTURE = ['id','month','day','year','type[in = income, out = outflow]','amount']
+
+def choose():
+    # inputs = ui.get_inputs(['What is your name? ', 'What is your surname? ', "What is your age? "], "Please provide your personal information")
+    FILE_PATH = 'accounting/items.csv'
+    inputs = ui.get_inputs(["Please enter a number: "], "")
+    option = inputs[0]
+    if option == "1":
+        show_table(data_manager.get_table_from_file(FILE_PATH))
+    elif option == "2":
+        data_manager.write_table_to_file(FILE_PATH,add(data_manager.get_table_from_file(FILE_PATH)))
+    elif option == "3":
+        table = data_manager.get_table_from_file(FILE_PATH)
+        ui.print_table(table, "Accounting")
+        data_manager.write_table_to_file(FILE_PATH,remove(table, find_id(table, ui.get_inputs(['index'], 'remove'))))
+    elif option == "4":
+        update('','')
+    elif option == "5":
+        which_year_max('')
+    elif option == "6":
+        avg_amount('','')
+    elif option == "0":
+        return False
+    else:
+        raise KeyError("There is no such option.")
+    return True
+
+
+def handle_menu():
+    options = ["Show Table",
+               "Add",
+               "Remove",
+               "Update",
+               "Which year max",
+               "Average amount"]
+
+    ui.print_menu("Accounting Module", options, "Back to main menu")
+
+
+def find_id(table, index):
+    INDEX_POSITION = 0
+    id_ = table[int(index[0])][INDEX_POSITION]
+    return id_
 
 def start_module():
     """
@@ -28,8 +71,14 @@ def start_module():
     Returns:
         None
     """
-
-    # you code
+    is_running = True
+    while is_running:
+        handle_menu()
+        try:
+            is_running = choose()
+        except KeyError as err:
+            ui.print_error_message(str(err))
+    # DONE
 
 
 def show_table(table):
@@ -42,7 +91,7 @@ def show_table(table):
     Returns:
         None
     """
-
+    ui.print_table(table, 'Accounting')
     # your code
 
 
@@ -56,7 +105,8 @@ def add(table):
     Returns:
         list: Table with a new record
     """
-
+    new_input = ui.get_inputs(DATA_TABLE_STRUCTURE, 'Accounting')
+    table.append(new_input)
     # your code
 
     return table
@@ -73,9 +123,10 @@ def remove(table, id_):
     Returns:
         list: Table without specified record.
     """
-
-    # your code
-
+    ID_POSITION = 0
+    for index, record in enumerate(table):
+        if record[ID_POSITION] == id_:
+            table.pop(index)
     return table
 
 
