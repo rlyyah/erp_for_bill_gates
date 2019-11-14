@@ -52,21 +52,18 @@ def choose():
     elif option == "2":
         common.clear_terminal()
         ui.blank_line()
-        data_manager.write_table_to_file(FILE_PATH, add(data_manager.get_table_from_file(FILE_PATH)))
-        add(path)
+        data_manager.write_table_to_file(path, add(path))
     elif option == "3":
         update()
     elif option == "4":
         common.clear_terminal()
-        ui.headline('---- TABLE WITH INVENTORY ----')
-        table = data_manager.get_table_from_file(FILE_PATH)
-        # ui.print_table(table, "where is it?")  # second parameter not used yet TODO
+        ui.headline('----  Persons Table  ----')
+        table = data_manager.get_table_from_file(path)
         ui.print_enumerate_table(table)
         ui.blank_line()
         ui.blank_line()
-        ui.headline('Removing item from inventory')
-        # header = ui.headline('Removing item from inventory')
-        data_manager.write_table_to_file(FILE_PATH, remove(table, find_id(table, ui.get_inputs(['Insert index of file to remove'], "REMOVE"))))
+        ui.headline('Removing person from list')
+        data_manager.write_table_to_file(path, remove(table, find_id(table, ui.get_inputs(['Insert index of file to remove'], "REMOVE"))))
         
     elif option == "5":
         get_oldest_person(table)
@@ -90,16 +87,15 @@ def show_table(table):
     Returns:
         None
     """
-
+    
     # your code
 
 
 def add(table):
-    ui.headline('Adding item to inventory')
-
+    ui.headline('Adding person to the list')
+    # path = data_manager.get_table_from_file("hr/persons.csv")
+    table = data_manager.get_table_from_file("hr/persons.csv")
     id = common.generate_random(table)
-    # without id!!!!! :
-    # TITLE_LIST = ['id: ', 'What is the item? ', 'Who manufactured the item? ', 'What is the purchase year? [year]', 'What is the durability? [year] ']
     TITLE_LIST = ['What is ID? ', 'What is name? ', 'What is born year?']
     ask_input = ui.get_inputs(TITLE_LIST, 'Please enter information about a person')
     ask_input.insert(0, id)
