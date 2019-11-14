@@ -31,6 +31,26 @@ def print_table(table, title_list):
         None: This function doesn't return anything it only prints to console.
     """
     print(table)
+    width_list = find_longest_width(table, title_list)
+    top = '-' * (sum(width_list)+len(width_list)*2+len(width_list)+1-2)
+    spacer = top + 2 * '-' 
+    print(f'/{top}\\')
+    print('|', end='')
+    for num, title in enumerate(title_list):
+        print(f"{title.center(width_list[num]+2)}|", end='')
+    print()
+    print(spacer)
+    for record in table:
+        print('|', end='')
+        for num, col in enumerate(record):
+            print(f"{col.center(width_list[num]+2)}|", end='')
+        if table.index(record) == len(table)-1:
+            print()
+            print(f'\\{top}/')
+        else:
+            print()
+            print(spacer)    
+        
     # your goes code bal balalsad
     # testing merging
 
