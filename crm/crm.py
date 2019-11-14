@@ -75,7 +75,7 @@ def choose():
         raise ValueError
     while option not in OPTION:
         raise KeyError
-        menu_control()
+        #menu_control()
 
 
 # Main crm module

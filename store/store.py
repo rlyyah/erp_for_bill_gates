@@ -16,6 +16,7 @@ import data_manager
 # common module
 import common
 import input_mod
+import sys
 
 
 # general variables for store
@@ -78,7 +79,7 @@ def choose():
         sys.exit(0)
     while option not in OPTION:
         raise KeyError
-        menu_control()
+        #menu_control()
 
 
 # Main store module
