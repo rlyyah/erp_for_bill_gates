@@ -57,7 +57,7 @@ def print_table(table, title_list):
     for record in table_copy:
         print('|', end='')
         for col in range(len(record)):
-            print(f"{strrecord[col].center(width_list[col]+2)}|", end='')
+            print(f"{str(record[col]).center(width_list[col]+2)}|", end='')
         if table_copy.index(record) == len(table_copy)-1:
             print()
             print(f'\\{top}/')
