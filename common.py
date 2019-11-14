@@ -45,7 +45,7 @@ def generate_random(table):
 
     # your code
 
-    
+
 def clear_terminal():
     print("\033c")
 
