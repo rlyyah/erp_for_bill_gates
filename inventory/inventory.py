@@ -21,7 +21,8 @@ import common
 def handle_menu_inventory_module():
     options = ["Show table",
                "Add item to table",
-               "Remove item from the table"]
+               "Remove item from the table",
+               "Update item in table"]
 
     menu_title = "Inventory module:"
     exit_message = "Back to main menu"
@@ -61,6 +62,18 @@ def choose_inventory_module():
         # data_manager.write_table_to_file(FILE_PATH, remove(table, find_id(table, ui.get_inputs(['Insert index of file to remove'], header))))
     if option == "4":
         # update
+        # index_inputted = ui.get_inputs(['Insert index of file to remove'], 'UPDATING')
+        # id_found = find_id(table, index_inputted)
+        # update(table, id_found)
+        # id = common.generate_random(table)
+        # table[index_inputted].insert(0, id)
+        # table[index_inputted].append(index_inputted, ask_input)
+
+        table = data_manager.get_table_from_file(FILE_PATH)
+        ui.print_enumerate_table(table)
+
+        data_manager.write_table_to_file(FILE_PATH, update(table, find_id(table, ui.get_inputs(['Insert index of file to update'], "UPDATING"))))
+
         pass
     if option == "5":
         #  get_available_items(table, year):
@@ -72,7 +85,8 @@ def choose_inventory_module():
 
 def find_id(table, index):
     INDEX_POSITION = 0
-    number_of_id = table[int(index[0])][INDEX_POSITION]
+    number_of_id = table[int(index[0]) - 1][INDEX_POSITION]
+    # number_of_id = number_of_id - 1
     return number_of_id
 
 
@@ -175,7 +189,7 @@ def remove(table, id_):
     ID_POSITION = 0
     for index, record in enumerate(table):
         if record[ID_POSITION] == id_:
-            table.pop(index - 1)
+            table.pop(index)
 
     return table
 
@@ -192,7 +206,21 @@ def update(table, id_):
         list: table with updated record
     """
 
-    # your code
+    TITLE_LIST = ['What is the item? ', 'Who manufactured the item? ', 'What is the purchase year? [year]', 'What is the durability? [year] ']
+    ask_input = ui.get_inputs(TITLE_LIST, 'Please enter information about an item')
+
+    print('ask input: ', ask_input)
+    print('ask input 0:', ask_input[0])
+
+    ID_POSITION = 0
+    for record in table:
+        if record[ID_POSITION] == id_:
+            # print(record[ID_POSITION])
+            # print(record)
+            record[1] = ask_input[0]
+            record[2] = ask_input[1]
+            record[3] = ask_input[2]
+            record[4] = ask_input[3]
 
     return table
 
