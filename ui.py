@@ -5,8 +5,8 @@ def find_longest_width(table, title_list):
         width_list.append(len(title))
     for line in table:
         for num, col in enumerate(line):
-            if len(col) > width_list[num]:
-                width_list[num] = len(col)
+            if len(str(col)) > width_list[num]:
+                width_list[num] = len(str(col))
     return width_list
 
 
@@ -57,7 +57,7 @@ def print_table(table, title_list):
     for record in table_copy:
         print('|', end='')
         for col in range(len(record)):
-            print(f"{record[col].center(width_list[col]+2)}|", end='')
+            print(f"{strrecord[col].center(width_list[col]+2)}|", end='')
         if table_copy.index(record) == len(table_copy)-1:
             print()
             print(f'\\{top}/')
