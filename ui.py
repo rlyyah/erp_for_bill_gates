@@ -155,4 +155,4 @@ def print_enumerate_table(table):
 
 
 def blank_line():
-    print()
+    print() 

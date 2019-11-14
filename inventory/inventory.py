@@ -77,10 +77,12 @@ def choose_inventory_module():
 
         data_manager.write_table_to_file(FILE_PATH, update(table, find_id(table, ui.get_inputs(['Insert index of file to update'], "UPDATING"))))
 
-        pass
     if option == "5":
-        #  get_available_items(table, year):
-        pass
+        TITLE_LIST = ['GETTING AVAILABLE ITEMS']
+        year = ui.get_inputs(TITLE_LIST, "Please enter information about year")
+        year = int(year[0])
+        # get_available_items(table, year)
+        ui.print_enumerate_table(get_available_items(table, year))
     if option == "6":
         table = data_manager.get_table_from_file(FILE_PATH)
         get_average_durability_by_manufacturers(table)
@@ -243,7 +245,32 @@ def get_available_items(table, year):
         list: list of lists (the inner list contains the whole row with their actual data types)
     """
 
-    # your code
+    # ACTUAL_YEAR = 2019
+    # TITLE_LIST = ['What is the year you want to know the items will be still available? ']
+    # year = ui.get_inputs(TITLE_LIST, "Please enter information about year")
+    
+    PURCHASE_YEAR_INDEX = 3
+    DURABILITY_INDEX = 4
+    list_of_available_items = []
+
+    for elem in range(len(table)):
+        # print(table[elem])
+        # print(table[elem][PURCHASE_YEAR_INDEX])
+
+        table[elem][PURCHASE_YEAR_INDEX] = int(table[elem][PURCHASE_YEAR_INDEX])
+        # print(table[elem][PURCHASE_YEAR_INDEX])
+
+        table[elem][DURABILITY_INDEX] = int(table[elem][DURABILITY_INDEX])
+        # print(table[elem][DURABILITY_INDEX])
+        
+        expiration_difference = table[elem][PURCHASE_YEAR_INDEX] + table[elem][DURABILITY_INDEX]
+        # print('expi diff: ', expiration_difference)
+
+        if expiration_difference >= year:
+            list_of_available_items.append(table[elem])
+
+    # print(list_of_available_items)
+    return list_of_available_items 
 
 
 def get_average_durability_by_manufacturers(table):
@@ -256,16 +283,6 @@ def get_average_durability_by_manufacturers(table):
     Returns:
         dict: a dictionary with this structure: { [manufacturer] : [avg] }
     """
-    # index_of_titles_variable_in_your_module = 2
-    # unique_elems = list(set(line[index_of_titles_variable_in_your_module] for line in table))
-    # print(unique_elems)
-
-    # manufacturer_index = 2
-    # common.find_elements_singular(table, manufacturer_index)
-
-    # unique_elems = list(set(line[manufacturer_index] for line in table))
-    # print(unique_elems)
-    # return unique_elems
 
     list_of_manufacturers = []
     manufacturer_index = 2
@@ -277,4 +294,12 @@ def get_average_durability_by_manufacturers(table):
     print()
     print(list_of_manufacturers)
 
-    # dictionary_of_
+    dictionary_of_manufacturers = {}
+    for elem in list_of_manufacturers:
+        if elem in dictionary_of_manufacturers:
+            dictionary_of_manufacturers[elem] += 1
+        else:
+            dictionary_of_manufacturers[elem] = 1
+
+    print(dictionary_of_manufacturers)
+    return dictionary_of_manufacturers

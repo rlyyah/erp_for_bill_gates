@@ -48,18 +48,3 @@ def generate_random(table):
 
 def clear_terminal():
     print("\033c")
-
-
-def find_elements_singular(table, index_of_titles_variable_in_your_module):
-    # singular_elements = list(line[index_of_titles_variable_in_your_module] for line in table)
-    # print('sing elem', singular_elements)
-    
-    # singular_elements2 = []
-    # for line in table:
-    #     singular_elements2.append(line[index_of_titles_variable_in_your_module])
-
-    # print('sing elem2', singular_elements2)
-
-    unique_elems = list(set(line[index_of_titles_variable_in_your_module] for line in table))
-    print(unique_elems)
-    return unique_elems
