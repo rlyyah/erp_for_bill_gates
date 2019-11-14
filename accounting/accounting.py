@@ -23,25 +23,27 @@ DATA_TABLE_STRUCTURE = ['id','month','day','year','type[in = income, out = outfl
 def choose():
     # inputs = ui.get_inputs(['What is your name? ', 'What is your surname? ', "What is your age? "], "Please provide your personal information")
     FILE_PATH = 'accounting/items.csv'
+    table = data_manager.get_table_from_file(FILE_PATH)
+    #ui.print_table(ui.find_longest_width(table, DATA_TABLE_STRUCTURE),'Table')
     inputs = ui.get_inputs(["Please enter a number: "], "")
     option = inputs[0]
     if option == "1":
-        show_table(data_manager.get_table_from_file(FILE_PATH))
+        show_table(table)
     elif option == "2":
-        data_manager.write_table_to_file(FILE_PATH,add(data_manager.get_table_from_file(FILE_PATH)))
+        data_manager.write_table_to_file(FILE_PATH,add(table))
     elif option == "3":
-        table = data_manager.get_table_from_file(FILE_PATH)
-        ui.print_table(table, "Accounting")
-        data_manager.write_table_to_file(FILE_PATH,remove(table, find_id(table, ui.get_inputs(['index'], 'remove'))))
+        ui.print_table(table, DATA_TABLE_STRUCTURE)
+        to_be_removed = ui.get_inputs(['index'], 'remove')
+        data_manager.write_table_to_file(FILE_PATH,remove(table, find_id(table, to_be_removed)))
     elif option == "4":
         update('','')
     elif option == "5":
         table = data_manager.get_table_from_file(FILE_PATH)
-        ui.print_table(which_year_max(table), "Max profits year")
+        #ui.print_table(which_year_max(table), "Max profits year")
     elif option == "6":
         table = data_manager.get_table_from_file(FILE_PATH)
         year = ui.get_inputs(['year'], 'which year?')
-        ui.print_table(avg_amount(table,year[0]),'avg year')
+        #ui.print_table(avg_amount(table,year[0]),'avg year')
     elif option == "0":
         return False
     else:
@@ -94,7 +96,7 @@ def show_table(table):
     Returns:
         None
     """
-    ui.print_table(table, 'Accounting')
+    ui.print_table(table, DATA_TABLE_STRUCTURE)
     # your code
 
 
