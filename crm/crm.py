@@ -57,7 +57,7 @@ def choose():
     and starts options from module.
     No arg
     Returns nothing"""
-    inputs = input_mod.get_inputs(['Enter a number: '], '')
+    inputs = ui.get_inputs(['Enter a number: '], '')
     option = inputs[0]
     if option == "1":
         show_table(table)
@@ -123,7 +123,7 @@ def add(table):
     """
 
     id = common.generate_random(table)
-    record = [id, input_mod.name('Name: ', 'Provide data to add'), input_mod.email('Email: ', ''),
+    record = [id, ui.name('Name: ', 'Provide data to add'), input_mod.email('Email: ', ''),
               input_mod.specific('Subscription: ', '', ['0', '1'], 'Provide 1(yes) or 0(no)')]
     table.append(record)
     data_manager.write_table_to_file(file_name, table)
