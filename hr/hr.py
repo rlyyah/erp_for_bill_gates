@@ -44,10 +44,11 @@ def handle_menu():
 
 
 def choose():
+    path = data_manager.get_table_from_file("hr/persons.csv")
     inputs = ui.get_inputs(["Please enter a number: "], "")
     option = inputs[0]
     if option == "1":
-        show_table(table)
+        show_table(path)
     elif option == "2":
         add()
     elif option == "3":
@@ -65,8 +66,8 @@ def choose():
     
 
 def show_table(table):
-    print("show table")
-    start_module()
+    TITLE_LIST = [id, 'name', 'year']
+    ui.print_table(table, TITLE_LIST)
     """
     Display a table
 

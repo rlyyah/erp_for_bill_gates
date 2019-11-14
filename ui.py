@@ -2,6 +2,7 @@
 
 
 def print_table(table, title_list):
+    print(table)
     """
     Prints table with data.
 
