@@ -33,7 +33,8 @@ def handle_menu_inventory_module():
 
 def choose_inventory_module():
     FILE_PATH = 'inventory/inventory.csv'
-    TITLE_LIST = ['id', 'name', 'manufacturer', 'purchase_year', 'durability']
+    # TITLE_LIST = ['id', 'name', 'manufacturer', 'purchase_year', 'durability']
+
     table = data_manager.get_table_from_file(FILE_PATH)
     inputs = ui.get_inputs(["Please enter a number: "], "")
     option = inputs[0]
@@ -276,4 +277,4 @@ def get_average_durability_by_manufacturers(table):
     print()
     print(list_of_manufacturers)
 
-    dictionary_of_
+    # dictionary_of_
