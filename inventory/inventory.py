@@ -22,7 +22,9 @@ def handle_menu_inventory_module():
     options = ["Show table",
                "Add item to table",
                "Remove item from the table",
-               "Update item in table"]
+               "Update item in table",
+               "Available items",
+               'Show average durability by manufacturers']
 
     menu_title = "Inventory module:"
     exit_message = "Back to main menu"
@@ -31,8 +33,8 @@ def handle_menu_inventory_module():
 
 def choose_inventory_module():
     FILE_PATH = 'inventory/inventory.csv'
-    TITLE_LIST = [id, 'name', 'manufacturer', 'purchase_year', 'durability']
-
+    TITLE_LIST = ['id', 'name', 'manufacturer', 'purchase_year', 'durability']
+    table = data_manager.get_table_from_file(FILE_PATH)
     inputs = ui.get_inputs(["Please enter a number: "], "")
     option = inputs[0]
     if option == "0":
@@ -79,8 +81,8 @@ def choose_inventory_module():
         #  get_available_items(table, year):
         pass
     if option == "6":
-        # get_average_durability_by_manufacturers(table):
-        pass
+        table = data_manager.get_table_from_file(FILE_PATH)
+        get_average_durability_by_manufacturers(table)
 
 
 def find_id(table, index):
@@ -118,7 +120,7 @@ def show_table(table):
     Returns:
         None
     """
-    TITLE_LIST = [id, 'name', 'manufacturer', 'purchase_year', 'durability']
+    TITLE_LIST = ['id', 'name', 'manufacturer', 'purchase_year', 'durability']
     ui.print_table(table, TITLE_LIST)
 
 
@@ -253,5 +255,25 @@ def get_average_durability_by_manufacturers(table):
     Returns:
         dict: a dictionary with this structure: { [manufacturer] : [avg] }
     """
+    # index_of_titles_variable_in_your_module = 2
+    # unique_elems = list(set(line[index_of_titles_variable_in_your_module] for line in table))
+    # print(unique_elems)
 
-    # your code
+    # manufacturer_index = 2
+    # common.find_elements_singular(table, manufacturer_index)
+
+    # unique_elems = list(set(line[manufacturer_index] for line in table))
+    # print(unique_elems)
+    # return unique_elems
+
+    list_of_manufacturers = []
+    manufacturer_index = 2
+    print(table)
+    for elem in table:
+        print(elem)
+        list_of_manufacturers.append(elem[manufacturer_index])
+    
+    print()
+    print(list_of_manufacturers)
+
+    dictionary_of_
