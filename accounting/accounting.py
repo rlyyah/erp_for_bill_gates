@@ -36,9 +36,12 @@ def choose():
     elif option == "4":
         update('','')
     elif option == "5":
-        which_year_max('')
+        table = data_manager.get_table_from_file(FILE_PATH)
+        ui.print_table(which_year_max(table), "Max profits year")
     elif option == "6":
-        avg_amount('','')
+        table = data_manager.get_table_from_file(FILE_PATH)
+        year = ui.get_inputs(['year'], 'which year?')
+        ui.print_table(avg_amount(table,year[0]),'avg year')
     elif option == "0":
         return False
     else:
@@ -59,7 +62,7 @@ def handle_menu():
 
 def find_id(table, index):
     INDEX_POSITION = 0
-    id_ = table[int(index[0])][INDEX_POSITION]
+    id_ = table[int(index[0])-1][INDEX_POSITION]
     return id_
 
 def start_module():
@@ -160,6 +163,24 @@ def which_year_max(table):
     Returns:
         number
     """
+    AMOUNT_POSITION = 5
+    TYPE_POSITION = 4
+    YEAR_POSITION = 3
+
+    year_dict = {}
+    for record in table:
+        if record[YEAR_POSITION] in year_dict:
+            if record[TYPE_POSITION] == 'in':
+                year_dict[record[YEAR_POSITION]] += int(record[AMOUNT_POSITION])
+            else:
+                year_dict[record[YEAR_POSITION]] -= int(record[AMOUNT_POSITION])
+        else:
+            if record[TYPE_POSITION] == 'in':
+                year_dict[record[YEAR_POSITION]] = int(record[AMOUNT_POSITION])
+            else:
+                year_dict[record[YEAR_POSITION]] = -int(record[AMOUNT_POSITION])
+    print(year_dict)
+    return year_dict
 
     # your code
 
@@ -175,5 +196,21 @@ def avg_amount(table, year):
     Returns:
         number
     """
+    AMOUNT_POSITION = 5
+    TYPE_POSITION = 4
+    YEAR_POSITION = 3
+
+    year_profit = 0
+    year_count = 0
+
+    for record in table:
+        if record[YEAR_POSITION] == year:
+            if record[TYPE_POSITION] == 'in':
+                year_profit += int(record[AMOUNT_POSITION])
+            else:
+                year_profit -= int(record[AMOUNT_POSITION])
+        year_count += 1
+    
+    return float(year_profit/year_count)
 
     # your code
