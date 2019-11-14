@@ -15,7 +15,7 @@ import ui
 import data_manager
 # common module
 import common
-import input_mod
+import sys
 
 
 # general variables for store
@@ -59,7 +59,7 @@ def choose():
     and starts options from module.
     No arg
     Returns nothing"""
-    inputs = input_mod.get_inputs(['Enter a number: '], '')
+    inputs = ui.get_inputs(['Enter a number: '], '')
     option = inputs[0]
     if option == "1":
         show_table(table)
@@ -125,13 +125,8 @@ def add(table):
         list: Table with a new record
     """
 
-    id = common.generate_random(table)
-    record = [id, input_mod.name('Game title: ', 'Provide data to add'), input_mod.name('Manufacturer: ', ''),
-              input_mod.number('Price: ', ''), input_mod.number('In stock: ', '')]
-    table.append(record)
-    data_manager.write_table_to_file(file_name, table)
-    show_table(table)
-    return table
+    module_headers = ["Title: ", "Manufacturer: ", "Price: ", "In stock: "]
+    return common.common_add(table, module_headers)
 
 
 # removes record from table
@@ -144,16 +139,8 @@ def remove(table, id_):
     Returns:
         list: Table without specified record.
     """
-    show_table(table)
-    line_number = input_mod.number_with_terms('Line: ', 'Please provide number of line you want to remove',
-                                       range(1, (len(table) + 1)))
-    id_ = common.convert_input_to_id(table, line_number)
-    for line in table:
-        if line[0] == id_:
-            table.remove(line)
-    data_manager.write_table_to_file(file_name, table)
-    show_table(table)
-    return table
+    return common.common_remove(table, id_, "store/games.csv")
+
 
 
 # updates record in table
@@ -167,18 +154,9 @@ def update(table, id_):
         list: table with updated record
     """
 
-    line_number = input_mod.number_with_terms('Line: ', 'Please provide number of line you want to update',
-                                       range(1, (len(table) + 1)))
-    id_ = common.convert_input_to_id(table, line_number)
-    line_data = input_mod.number_with_terms(details_update_list_labels, detail_update_title, range(1, 6))
-    new_record = input_mod.get_inputs(['New data: '], 'Please provide new data')[0]
-    # mam tu problem z wprowadzaniem nowych danych = powinno być to obudowane warunkami. ale nie wiem jak
-    for number, line in enumerate(table):
-        if line[0] == id_:
-            table[number][line_data] = new_record
-    data_manager.write_table_to_file(file_name, table)
-    show_table(table)
-    return table
+def update(table, id_):
+    module_headers = ["Title: ", "Manufacturer: ", "Price: ", "In stock: "]
+    return common.common_update(table, id_, "inventory/inventory.csv", module_headers)
 
 
 # Special functions
@@ -212,33 +190,16 @@ def get_average_by_manufacturerERP(table, manufacturer):
          number
     """
 
-    manufacturer = input_mod.name('Manufacturer: ', 'Provide name of manufacturer')
-    counted_manufacturer = 0
-    games_count = 0
-    for line in table:
-        if manufacturer in line[manuf_index]:
-            counted_manufacturer += 1
-            games_count += int(line[stock_index])
-    average = games_count/counted_manufacturer
-    return average
+    manufacturers = []
+    in_stocks = []
+    total = 0
+    try:
+        for i in range(len(table)):
+            if manufacturer == table[i][2]:
+                in_stocks.append(int(table[i][4]))
+        for in_stock in in_stocks:
+            total += in_stock
+        return total / len(in_stocks)
+    except BaseException:
+        ui.print_error_message("There's no such manufacturer in table!")
 
-
-# function for test
-def get_average_by_manufacturer(table, manufacturer):
-    """
-    Question: What is the average amount of games in stock of a given manufacturer?
-    Args:
-        table (list): data table to work on
-        manufacturer (str): Name of manufacturer
-    Returns:
-         number
-    """
-
-    counted_manufacturer = 0
-    games_count = 0
-    for line in table:
-        if manufacturer in line[manuf_index]:
-            counted_manufacturer += 1
-            games_count += int(line[stock_index])
-    average = games_count/counted_manufacturer
-    return average
