@@ -7,6 +7,7 @@ def find_longest_width(table, title_list):
         width_list.append(len(title))
     for line in table:
         for num, col in enumerate(line):
+            col = str(col)      # error - int object has no attribute len! had to change to str!
             if len(col) > width_list[num]:
                 width_list[num] = len(col)
     return width_list
@@ -29,7 +30,7 @@ def print_table(table, title_list):
     Returns:
         None: This function doesn't return anything it only prints to console.
     """
-    print(table)
+    # print(table)
     width_list = find_longest_width(table, title_list)
     top = '-' * (sum(width_list)+len(width_list)*2+len(width_list)+1-2)
     spacer = top + 2 * '-' 
@@ -42,6 +43,7 @@ def print_table(table, title_list):
     for record in table:
         print('|', end='')
         for num, col in enumerate(record):
+            col = str(col)      # error - int object has no attribute len! had to change to str!
             print(f"{col.center(width_list[num]+2)}|", end='')
         if table.index(record) == len(table)-1:
             print()
@@ -150,9 +152,12 @@ def headline(head):
 
 def print_enumerate_table(table):
     for i, item in enumerate(table, 1):
-        print(i, '.', item)
-        # print(i, '.', item, end='')
+        print('{}. {}'.format(i, item))
 
 
 def blank_line():
     print() 
+
+
+def print_dictionary(dict):
+    print(dict)

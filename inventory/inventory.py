@@ -33,17 +33,19 @@ def handle_menu_inventory_module():
 
 def choose_inventory_module():
     FILE_PATH = 'inventory/inventory.csv'
-    # TITLE_LIST = ['id', 'name', 'manufacturer', 'purchase_year', 'durability']
+    TITLE_LIST = ['id', 'name', 'manufacturer', 'purchase_year', 'durability']
 
     table = data_manager.get_table_from_file(FILE_PATH)
     inputs = ui.get_inputs(["Please enter a number: "], "")
-    option = inputs[0]
+    INDEX_OF_FIRST_ELEMENT_OF_INPUTS_LIST = 0
+    option = inputs[INDEX_OF_FIRST_ELEMENT_OF_INPUTS_LIST]
     if option == "0":
         return False
     if option == "1":
         common.clear_terminal()
         ui.blank_line()
         ui.headline('---- TABLE WITH INVENTORY ----')
+        ui.blank_line()
         show_table(data_manager.get_table_from_file(FILE_PATH))     # ONLY THIS NEEDEd TO PRINT TABLE RIGHT NOW
     elif option == "2":
         # list_from_file = data_manager.get_table_from_file(FILE_PATH)
@@ -64,33 +66,39 @@ def choose_inventory_module():
         data_manager.write_table_to_file(FILE_PATH, remove(table, find_id(table, ui.get_inputs(['Insert index of file to remove'], "REMOVE"))))
         # data_manager.write_table_to_file(FILE_PATH, remove(table, find_id(table, ui.get_inputs(['Insert index of file to remove'], header))))
     if option == "4":
-        # update
-        # index_inputted = ui.get_inputs(['Insert index of file to remove'], 'UPDATING')
-        # id_found = find_id(table, index_inputted)
-        # update(table, id_found)
-        # id = common.generate_random(table)
-        # table[index_inputted].insert(0, id)
-        # table[index_inputted].append(index_inputted, ask_input)
-
+        common.clear_terminal()
+        ui.blank_line()
+        ui.blank_line()
+        ui.headline('EDITING EXISTING RECORD')
         table = data_manager.get_table_from_file(FILE_PATH)
         ui.print_enumerate_table(table)
-
         data_manager.write_table_to_file(FILE_PATH, update(table, find_id(table, ui.get_inputs(['Insert index of file to update'], "UPDATING"))))
-
     if option == "5":
-        TITLE_LIST = ['GETTING AVAILABLE ITEMS']
+        common.clear_terminal()
+        ui.headline('GETTING AVAILABLE ITEMS')
+        TITLE_LIST = ['']
         year = ui.get_inputs(TITLE_LIST, "Please enter information about year")
-        year = int(year[0])
-        # get_available_items(table, year)
-        ui.print_enumerate_table(get_available_items(table, year))
+        INDEX_OF_FIRST_ELEMENT_OF_YEAR_LIST = 0
+        year = int(year[INDEX_OF_FIRST_ELEMENT_OF_YEAR_LIST])
+        ui.blank_line()
+        ui.headline('ITEMS THAT MEETS YOUR CONDITIONS')
+        ui.blank_line()
+        show_table(get_available_items(table, year))
     if option == "6":
+        common.clear_terminal()
+        ui.blank_line()
+        ui.blank_line()
+        ui.headline('GETTING AVERAGE DURABILITY BY MANUFRACTURERS')
         table = data_manager.get_table_from_file(FILE_PATH)
-        get_average_durability_by_manufacturers(table)
+        ui.blank_line()
+        ui.print_dictionary(get_average_durability_by_manufacturers(table))
 
 
 def find_id(table, index):
     INDEX_POSITION = 0
-    number_of_id = table[int(index[0]) - 1][INDEX_POSITION]
+    INDEX_OF_FIRST_ELEMENT_OF_INDEX_LIST = 0
+    NUMBER_TO_DISTRACT_BECAUES_INDEXING_IS_FROM_ZER0 = 1
+    number_of_id = table[int(index[INDEX_OF_FIRST_ELEMENT_OF_INDEX_LIST]) - NUMBER_TO_DISTRACT_BECAUES_INDEXING_IS_FROM_ZER0][INDEX_POSITION]
     # number_of_id = number_of_id - 1
     return number_of_id
 
@@ -138,34 +146,6 @@ def add(table):
         list: Table with a new record
     """
 
-    # -------------------------------------------------------------------------
-    # ----------------------- THIS WORKS BUT IS NOT GOOD ENOUGH ------------------------------------------------
-    # new_record = []
-    # input_class_list = ['id', 'name', 'manufacturer', 'purchase_year', 'durability']
-    # for elem in input_class_list:
-    #     element = input(f'Input {elem} : ')
-    #     new_record.append(element)
-    # print()
-    # new_record_text = 'Your new record is: '
-    # print(new_record_text)
-    # print()
-    # print(new_record)
-    # print()
-    
-    # record_to_file = ','.join(new_record)
-    # with open(table, 'a+') as fo:
-    #     print('It has been added to record list')
-    #     print(record_to_file)
-    #     fo.writelines('\n' + record_to_file)
-    #     # fo.writelines('%s' % '\n' + record_to_file)
-    #     fo.close()
-
-    # inv = data_manager.get_table_from_file(table)
-    # return inv
-
-    # return table        # this one should be? why return table???
-    # -------------------------------------------------------------------------
-    # ----------------------- BETTER ------------------------------------------------
     ui.headline('Adding item to inventory')
 
     id = common.generate_random(table)
@@ -173,7 +153,9 @@ def add(table):
     # TITLE_LIST = ['id: ', 'What is the item? ', 'Who manufactured the item? ', 'What is the purchase year? [year]', 'What is the durability? [year] ']
     TITLE_LIST = ['What is the item? ', 'Who manufactured the item? ', 'What is the purchase year? [year]', 'What is the durability? [year] ']
     ask_input = ui.get_inputs(TITLE_LIST, 'Please enter information about an item')
-    ask_input.insert(0, id)
+
+    INDEX_OF_ID_TO_ADD_TO_ASK_INPUT = 0
+    ask_input.insert(INDEX_OF_ID_TO_ADD_TO_ASK_INPUT, id)
     table.append(ask_input)
 
     return table
@@ -214,18 +196,28 @@ def update(table, id_):
     TITLE_LIST = ['What is the item? ', 'Who manufactured the item? ', 'What is the purchase year? [year]', 'What is the durability? [year] ']
     ask_input = ui.get_inputs(TITLE_LIST, 'Please enter information about an item')
 
-    print('ask input: ', ask_input)
-    print('ask input 0:', ask_input[0])
+    # print('ask input: ', ask_input)
+    # print('ask input 0:', ask_input[0])
 
     ID_POSITION = 0
+    INDEX_OF_SECOND_ELEMENT_OF_RECORD = 1
+    INDEX_OF_THIRD_ELEMENT_OF_RECORD = 2
+    INDEX_OF_FOURTH_ELEMENT_OF_RECORD = 3
+    INDEX_OF_FIVE_ELEMENT_OF_RECORD = 4
+
+    INDEX_OF_FIRST_ELEMENT_OF_ASK_INPUT = 0
+    INDEX_OF_SECOND_ELEMENT_OF_ASK_INPUT = 1
+    INDEX_OF_THIRD_ELEMENT_OF_ASK_INPUT = 2
+    INDEX_OF_FOURTH_ELEMENT_OF_ASK_INPUT = 3
+
     for record in table:
         if record[ID_POSITION] == id_:
             # print(record[ID_POSITION])
             # print(record)
-            record[1] = ask_input[0]
-            record[2] = ask_input[1]
-            record[3] = ask_input[2]
-            record[4] = ask_input[3]
+            record[INDEX_OF_SECOND_ELEMENT_OF_RECORD] = ask_input[INDEX_OF_FIRST_ELEMENT_OF_ASK_INPUT]
+            record[INDEX_OF_THIRD_ELEMENT_OF_RECORD] = ask_input[INDEX_OF_SECOND_ELEMENT_OF_ASK_INPUT]
+            record[INDEX_OF_FOURTH_ELEMENT_OF_RECORD] = ask_input[INDEX_OF_THIRD_ELEMENT_OF_ASK_INPUT]
+            record[INDEX_OF_FIVE_ELEMENT_OF_RECORD] = ask_input[INDEX_OF_FOURTH_ELEMENT_OF_ASK_INPUT]
 
     return table
 
@@ -286,20 +278,21 @@ def get_average_durability_by_manufacturers(table):
 
     list_of_manufacturers = []
     manufacturer_index = 2
-    print(table)
+    # print(table)
     for elem in table:
-        print(elem)
+        # print(elem)
         list_of_manufacturers.append(elem[manufacturer_index])
     
-    print()
-    print(list_of_manufacturers)
+    # print()
+    # print(list_of_manufacturers)
+    adding_one_to_count_of_each_manufacturers = 1 
 
     dictionary_of_manufacturers = {}
     for elem in list_of_manufacturers:
         if elem in dictionary_of_manufacturers:
-            dictionary_of_manufacturers[elem] += 1
+            dictionary_of_manufacturers[elem] += adding_one_to_count_of_each_manufacturers
         else:
-            dictionary_of_manufacturers[elem] = 1
+            dictionary_of_manufacturers[elem] = adding_one_to_count_of_each_manufacturers
 
-    print(dictionary_of_manufacturers)
+    # print(dictionary_of_manufacturers)
     return dictionary_of_manufacturers
