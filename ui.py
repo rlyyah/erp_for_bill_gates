@@ -1,16 +1,25 @@
 """ User Interface (UI) module """
-
-
 def find_longest_width(table, title_list):
     width_list = []
     for title in title_list:
         width_list.append(len(title))
     for line in table:
         for num, col in enumerate(line):
-            col = str(col)      # error - int object has no attribute len! had to change to str!
-            if len(col) > width_list[num]:
-                width_list[num] = len(col)
+            if len(str(col)) > width_list[num]:
+                width_list[num] = len(str(col))
     return width_list
+
+
+def copy_table(table):
+    copied_table = []
+    copied_line = []
+    ID_POSITION = 0
+    
+    for index, record in enumerate(table):
+        copied_line = record[:]
+        copied_line[ID_POSITION] = str(index+1)
+        copied_table.append(copied_line)
+    return copied_table
 
 
 def print_table(table, title_list):
@@ -30,8 +39,10 @@ def print_table(table, title_list):
     Returns:
         None: This function doesn't return anything it only prints to console.
     """
-    # print(table)
-    width_list = find_longest_width(table, title_list)
+    print(table)
+    table_copy = copy_table(table) 
+    print(table)
+    width_list = find_longest_width(table_copy, title_list)
     top = '-' * (sum(width_list)+len(width_list)*2+len(width_list)+1-2)
     spacer = top + 2 * '-' 
     print(f'/{top}\\')
@@ -40,12 +51,11 @@ def print_table(table, title_list):
         print(f"{title.center(width_list[num]+2)}|", end='')
     print()
     print(spacer)
-    for record in table:
+    for record in table_copy:
         print('|', end='')
-        for num, col in enumerate(record):
-            col = str(col)      # error - int object has no attribute len! had to change to str!
-            print(f"{col.center(width_list[num]+2)}|", end='')
-        if table.index(record) == len(table)-1:
+        for col in range(len(record)):
+            print(f"{str(record[col]).center(width_list[col]+2)}|", end='')
+        if table_copy.index(record) == len(table_copy)-1:
             print()
             print(f'\\{top}/')
         else:
