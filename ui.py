@@ -1,4 +1,13 @@
 """ User Interface (UI) module """
+def find_longest_width(table, title_list):
+    width_list = []
+    for title in title_list:
+        width_list.append(len(title))
+    for line in table:
+        for num, col in enumerate(line):
+            if len(col) > width_list[num]:
+                width_list[num] = len(col)
+    return width_list
 
 
 def print_table(table, title_list):
