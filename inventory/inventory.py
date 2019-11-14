@@ -26,7 +26,8 @@ def handle_menu_inventory_module():
                "Available items",
                'Show average durability by manufacturers']
 
-    menu_title = "Inventory module:"
+    menu_title = "Inventory module menu"
+    menu_title = ui.return_headline_for_menu_title_(menu_title)
     exit_message = "Back to main menu"
     ui.print_menu(menu_title, options, exit_message)
 
@@ -57,8 +58,8 @@ def choose_inventory_module():
         common.clear_terminal()
         ui.headline('---- TABLE WITH INVENTORY ----')
         table = data_manager.get_table_from_file(FILE_PATH)
-        # ui.print_table(table, "where is it?")  # second parameter not used yet TODO
-        ui.print_enumerate_table(table)
+        ui.blank_line()
+        show_table(data_manager.get_table_from_file(FILE_PATH))     # ONLY THIS NEEDEd TO PRINT TABLE RIGHT NOW
         ui.blank_line()
         ui.blank_line()
         ui.headline('Removing item from inventory')
@@ -71,7 +72,8 @@ def choose_inventory_module():
         ui.blank_line()
         ui.headline('EDITING EXISTING RECORD')
         table = data_manager.get_table_from_file(FILE_PATH)
-        ui.print_enumerate_table(table)
+        ui.blank_line()
+        show_table(data_manager.get_table_from_file(FILE_PATH))     # ONLY THIS NEEDEd TO PRINT TABLE RIGHT NOW
         data_manager.write_table_to_file(FILE_PATH, update(table, find_id(table, ui.get_inputs(['Insert index of file to update'], "UPDATING"))))
     elif option == "5":
         common.clear_terminal()
@@ -92,6 +94,13 @@ def choose_inventory_module():
         table = data_manager.get_table_from_file(FILE_PATH)
         ui.blank_line()
         ui.print_dictionary(get_average_durability_by_manufacturers(table))
+    elif option == "0":
+        common.clear_terminal()
+        return False
+    else:
+        common.clear_terminal()
+        raise KeyError("There is no such option.")
+    return True
 
 
 def find_id(table, index):
@@ -118,7 +127,7 @@ def start_module():
         try:
             is_running = choose_inventory_module()
         except KeyError as err:
-            ui.print_error_message(str(err))
+            ui.print_error_message(str(err), 'There is no such option')
 
 
 def show_table(table):

@@ -1,4 +1,6 @@
 """ User Interface (UI) module """
+
+
 def find_longest_width(table, title_list):
     width_list = []
     for title in title_list:
@@ -39,9 +41,9 @@ def print_table(table, title_list):
     Returns:
         None: This function doesn't return anything it only prints to console.
     """
-    print(table)
+    # print(table)
     table_copy = copy_table(table) 
-    print(table)
+    # print(table)
     width_list = find_longest_width(table_copy, title_list)
     top = '-' * (sum(width_list)+len(width_list)*2+len(width_list)+1-2)
     spacer = top + 2 * '-' 
@@ -77,8 +79,7 @@ def print_result(result, label):
     Returns:
         None: This function doesn't return anything it only prints to console.
     """
-
-    # your code
+    print('{} {}'.format(result, label))
 
 
 def print_menu(title, list_options, exit_message):
@@ -149,7 +150,7 @@ def print_error_message(message):
     Returns:
         None: This function doesn't return anything it only prints to console.
     """
-
+    print('Error! WARNING! WTF? '.format(message))
     # your code
 
 
@@ -157,8 +158,7 @@ def headline(head):
     headline = '\033[1;34;49m {}'.format(head)
     headline_alignment = headline.center(60)
     print(headline_alignment, '\033[0;37;49m ')
-    # print('\033[0;37;49m ')
-
+    
 
 def print_enumerate_table(table):
     for i, item in enumerate(table, 1):
@@ -171,3 +171,9 @@ def blank_line():
 
 def print_dictionary(dict):
     print(dict)
+
+
+def return_headline_for_menu_title_(head):
+    head_centered = head.center(60)
+    headlne2 = '\033[1;34;49m {} \033[0;37;49m'.format(head_centered)
+    return headlne2
