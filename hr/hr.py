@@ -173,9 +173,14 @@ def get_oldest_person(table):
         if year_list[i] < max:
             max = year_list[i]
             name = table[i][1]
-        #if max in year_list
-    print(max, name)
-    return year_list
+        list_oldest_persons = []
+        for i in range(len(year_list)):
+            if max == year_list[i]:
+                list_oldest_persons.append(table[i][1])
+            else:
+                pass
+    print(list_oldest_persons)
+    return list_oldest_persons
     """
     Question: Who is the oldest person?
 
@@ -190,12 +195,33 @@ def get_oldest_person(table):
 
 
 def get_persons_closest_to_average(table):
-    year_list = get_oldest_person(table)
+    year_list = []
+    for i in range(len(table)):
+        year_list.append(int(table[i][2]))
     sum = 0
     for ele in year_list:
-        sum = sum + ele
+        sum += ele
     averega_years = sum / len(year_list)
-    print(sum, averega_years)
+
+    min_diff = None
+    closest = None
+    for i in year_list:
+        diff = abs(averega_years - i)
+        if min_diff is None or diff < min_diff:
+            min_diff = diff
+            closest = i
+            a = year_list.index(closest)
+    print(table[a][1])
+    list_avg_pers = []
+    for i in range(len(year_list)):
+            if closest == year_list[i]:
+                list_avg_pers.append(table[i][1])
+            else:
+                pass
+    print(list_avg_pers)
+    return list_avg_pers
+    
+        
     """
     Question: Who is the closest to the average age?
 
