@@ -1,11 +1,23 @@
 """ User Interface (UI) module """
 
 
-def print_table(table, title_list):
+def find_longest_width(table, title_list):
     print(table)
+    print()
+    width_list = []
+    for title in title_list:
+        width_list.append(len(title))
+    for line in table:
+        for num, col in enumerate(line):
+            col = str(col)      # error - int object has no attribute len! had to change to str!
+            if len(col) > width_list[num]:
+                width_list[num] = len(col)
+    return width_list
+
+
+def print_table(table, title_list):
     """
     Prints table with data.
-
     Example:
         /-----------------------------------\
         |   id   |      title     |  type   |
@@ -14,16 +26,36 @@ def print_table(table, title_list):
         |--------|----------------|---------|
         |   1    |       fo       |    fps  |
         \-----------------------------------/
-
     Args:
         table (list): list of lists - table to display
         title_list (list): list containing table headers
-
     Returns:
         None: This function doesn't return anything it only prints to console.
     """
-
-    # your goes code
+    # print(table)
+    width_list = find_longest_width(table, title_list)
+    top = '-' * (sum(width_list)+len(width_list)*2+len(width_list)+1-2)
+    spacer = top + 2 * '-' 
+    print(f'/{top}\\')
+    print('|', end='')
+    for num, title in enumerate(title_list):
+        print(f"{title.center(width_list[num]+2)}|", end='')
+    print()
+    print(spacer)
+    for record in table:
+        print('|', end='')
+        for num, col in enumerate(record):
+            col = str(col)      # error - int object has no attribute len! had to change to str!
+            print(f"{col.center(width_list[num]+2)}|", end='')
+        if table.index(record) == len(table)-1:
+            print()
+            print(f'\\{top}/')
+        else:
+            print()
+            print(spacer)    
+        
+    # your goes code bal balalsad
+    # testing merging
 
 
 def print_result(result, label):

@@ -81,8 +81,9 @@ def find_id(table, index):
     number_of_id = table[int(index[0])-1][INDEX_POSITION]
     return number_of_id   
 
+
 def show_table(table):
-    TITLE_LIST = [id, 'name', 'year']
+    TITLE_LIST = ['id', 'name', 'year']
     ui.print_table(table, TITLE_LIST)
     """
     Display a table
@@ -214,14 +215,13 @@ def get_persons_closest_to_average(table):
     print(table[a][1])
     list_avg_pers = []
     for i in range(len(year_list)):
-            if closest == year_list[i]:
-                list_avg_pers.append(table[i][1])
-            else:
-                pass
+        if closest == year_list[i]:
+            list_avg_pers.append(table[i][1])
+        else:
+            pass
     print(list_avg_pers)
     return list_avg_pers
     
-        
     """
     Question: Who is the closest to the average age?
 
