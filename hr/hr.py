@@ -35,6 +35,12 @@ def start_module():
 
     # your code
 
+def find_id(table, index):
+    INDEX_POSITION = 0
+    number_of_id = table[int(index[0])][INDEX_POSITION]
+    return number_of_id
+
+
 
 def handle_menu():
     options = ["Show table", "Add new item", "Update item", "Remove item", "Get oldest person", "Get persons closest to average"]
@@ -67,6 +73,7 @@ def choose():
         
     elif option == "5":
         get_oldest_person(table)
+
     elif option == "6":
         get_persons_closest_to_average(table)
     elif option == "0":
@@ -116,7 +123,7 @@ def add(table):
 
 
 def remove(table, id_):
-    D_POSITION = 0
+    ID_POSITION = 0
     for index, record in enumerate(table):
         if record[ID_POSITION] == id_:
             table.pop(index - 1)
