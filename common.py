@@ -3,22 +3,26 @@ implement commonly used functions here
 """
 
 import random
+import ui
+import string
+import data_manager
 
 # FUNCTIONS TO CREATE ID
 # variables for generating random id
 numbers = '0123456789'
 letters = 'abcdefghijklmnoprstuwxyz'
-signs = "!#$%&'()*+,-./:_<=>?@][`^{|}~"
+sign = ("#&")
 id_index = 0
 
 
 # creates id
 def create_id():
-    elem_id1 = ''.join(random.sample(numbers, 2))
-    elem_id2 = ''.join(random.sample(letters, 2))
-    elem_id3 = ''.join(random.sample(signs, 2))
-    elem_id4 = ''.join(random.sample(letters, 2)).upper()
-    id = elem_id1 + elem_id2 + elem_id3 + elem_id4
+    elem_id1 = ''.join(random.choice(letters))
+    elem_id2 = ''.join(random.choice(letters)).upper()
+    elem_id3 = ''.join(random.sample(numbers, 2))
+    elem_id4 = ''.join(random.choice(letters)).upper()
+    elem_id5 = ''.join(random.choice(letters))
+    id = elem_id1 + elem_id2 + elem_id3 + elem_id4 + elem_id5 + sign
     return id
 
 
@@ -43,7 +47,8 @@ def generate_random(table):
     else:
         return generated_id
 
-    # your code
+
+# OTHER HELPING FUNCTIONS:
 
 
 def clear_terminal():
