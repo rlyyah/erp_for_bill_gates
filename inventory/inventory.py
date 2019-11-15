@@ -70,14 +70,14 @@ def choose_inventory_module():
         common.clear_terminal()
         ui.blank_line()
         ui.blank_line()
-        ui.headline('EDITING EXISTING RECORD')
+        ui.headline('---- EDITING EXISTING RECORD ----')
         table = data_manager.get_table_from_file(FILE_PATH)
         ui.blank_line()
         show_table(data_manager.get_table_from_file(FILE_PATH))     # ONLY THIS NEEDEd TO PRINT TABLE RIGHT NOW
         data_manager.write_table_to_file(FILE_PATH, update(table, find_id(table, ui.get_inputs(['Insert index of file to update'], "UPDATING"))))
     elif option == "5":
         common.clear_terminal()
-        ui.headline('GETTING AVAILABLE ITEMS')
+        ui.headline('---- GETTING AVAILABLE ITEMS ---- ')
         TITLE_LIST = ['']
         year = ui.get_inputs(TITLE_LIST, "Please enter information about year")
         INDEX_OF_FIRST_ELEMENT_OF_YEAR_LIST = 0
@@ -90,7 +90,7 @@ def choose_inventory_module():
         common.clear_terminal()
         ui.blank_line()
         ui.blank_line()
-        ui.headline('GETTING AVERAGE DURABILITY BY MANUFRACTURERS')
+        ui.headline('---- GETTING AVERAGE DURABILITY BY MANUFRACTURERS ---- ')
         table = data_manager.get_table_from_file(FILE_PATH)
         ui.blank_line()
         ui.print_dictionary(get_average_durability_by_manufacturers(table))
@@ -131,6 +131,14 @@ def start_module():
             is_running = choose_inventory_module()
         except KeyError as err:
             ui.print_error_message(str(err), 'There is no such option')
+
+
+def showing_table(table, FILE_PATH):        # TODO
+    common.clear_terminal()
+    ui.blank_line()
+    ui.headline('---- TABLE WITH INVENTORY ----')
+    ui.blank_line()
+    show_table(data_manager.get_table_from_file(FILE_PATH))     # ONLY THIS NEEDEd TO PRINT TABLE RIGHT NOW
 
 
 def show_table(table):
