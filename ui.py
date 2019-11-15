@@ -1,4 +1,6 @@
 """ User Interface (UI) module """
+
+
 def find_longest_width(table, title_list):
     width_list = []
     for title in title_list:
@@ -28,51 +30,6 @@ def sum_list_of_nums(list_to_sum):
         count += num
     
     return count
-
-def find_longest_width(table, title_list):
-    width_list = []
-    for title in title_list:
-        width_list.append(len(title))
-    for line in table:
-        for num, col in enumerate(line):
-            if len(str(col)) > width_list[num]:
-                width_list[num] = len(str(col))
-    return width_list
-
-
-def copy_table(table):
-    copied_table = []
-    copied_line = []
-    ID_POSITION = 0
-    
-    for index, record in enumerate(table):
-        copied_line = record[:]
-        copied_line[ID_POSITION] = str(index+1)
-        copied_table.append(copied_line)
-    return copied_table
-
-
-def find_longest_width(table, title_list):
-    width_list = []
-    for title in title_list:
-        width_list.append(len(title))
-    for line in table:
-        for num, col in enumerate(line):
-            if len(str(col)) > width_list[num]:
-                width_list[num] = len(str(col))
-    return width_list
-
-
-def copy_table(table):
-    copied_table = []
-    copied_line = []
-    ID_POSITION = 0
-    
-    for index, record in enumerate(table):
-        copied_line = record[:]
-        copied_line[ID_POSITION] = str(index+1)
-        copied_table.append(copied_line)
-    return copied_table
 
 
 def print_table(table, title_list):
@@ -114,9 +71,6 @@ def print_table(table, title_list):
             print()
             print(spacer)    
         
-    # your goes code bal balalsad
-    # testing merging
-
 
 def print_result(result, label):
     """
@@ -160,8 +114,6 @@ def print_menu(title, list_options, exit_message):
     for index, element in enumerate(list_options):
         print('    ({}) {}'.format(index + 1, element))
     print('    (0) {}'.format(exit_message))
-    # your code
-    # Line added to test development branch!
 
 
 def get_inputs(list_labels, title):
@@ -189,7 +141,6 @@ def get_inputs(list_labels, title):
         print(label)
         user_input = input()
         inputs.append(user_input)
-    # print(inputs)
     return inputs
 
 

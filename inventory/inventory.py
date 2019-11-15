@@ -95,11 +95,14 @@ def choose_inventory_module():
         ui.blank_line()
         ui.print_dictionary(get_average_durability_by_manufacturers(table))
     elif option == "0":
-        common.clear_terminal()
+        # print('asdasdas')
+        # common.clear_terminal()
+        # print('asdasdas')
         return False
     else:
         common.clear_terminal()
-        raise KeyError("There is no such option.")
+        print('Please enter number of one of the options')
+        # raise KeyError("There is no such option.")
     return True
 
 
