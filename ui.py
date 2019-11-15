@@ -49,9 +49,7 @@ def print_table(table, title_list):
     Returns:
         None: This function doesn't return anything it only prints to console.
     """
-    print(table)
     table_copy = copy_table(table) 
-    print(table)
     width_list = find_longest_width(table_copy, title_list)
     top = '-' * (sum_list_of_nums(width_list)+len(width_list)*2+len(width_list)+1-2)
     spacer = top + 2 * '-' 
