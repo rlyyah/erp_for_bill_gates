@@ -46,10 +46,8 @@ def generate_random(table):
     else:
         return generated_id
 
-
-
+      
 # OTHER HELPING FUNCTIONS:
-
 
 # takes input (line number) and finds ID of line number
 def convert_input_to_id(table, line_number):
