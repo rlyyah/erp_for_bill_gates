@@ -1,10 +1,11 @@
 # Do not modify this file
 # run this program (the ERP software) from the terminal from thd root directory of this project
 
+
 import sys
 import ui  # User Interface
 # Store module
-# from store import store
+from store import store
 # Human Resources module
 from hr import hr
 # Tool manager module
@@ -15,8 +16,6 @@ from accounting import accounting
 from sales import sales
 # Customer Relationship Management (CRM) module
 from crm import crm
-
-from store import store
 
 
 def choose():
@@ -49,8 +48,10 @@ def handle_menu():
                "Accounting manager",
                "Sales manager",
                "Customer Relationship Management (CRM)"]
-
-    ui.print_menu("Main menu", options, "Exit program")
+    
+    menu_title = "Main menu"
+    menu_title = ui.return_headline_for_menu_title_(menu_title)
+    ui.print_menu(menu_title, options, "Exit program")
 
 
 def main():

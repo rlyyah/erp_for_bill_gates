@@ -40,9 +40,7 @@ def choose_inventory_module():
     inputs = ui.get_inputs(["Please enter a number: "], "")
     INDEX_OF_FIRST_ELEMENT_OF_INPUTS_LIST = 0
     option = inputs[INDEX_OF_FIRST_ELEMENT_OF_INPUTS_LIST]
-    if option == "0":
-        return False
-    elif option == "1":
+    if option == "1":
         common.clear_terminal()
         ui.blank_line()
         ui.headline('---- TABLE WITH INVENTORY ----')
@@ -95,9 +93,7 @@ def choose_inventory_module():
         ui.blank_line()
         ui.print_dictionary(get_average_durability_by_manufacturers(table))
     elif option == "0":
-        # print('asdasdas')
-        # common.clear_terminal()
-        # print('asdasdas')
+        common.clear_terminal()
         return False
     else:
         common.clear_terminal()
