@@ -18,6 +18,31 @@ import data_manager
 import common
 
 
+def handle_menu_inventory_module():
+    options = ["Show table",
+               "Add product to table"]
+
+    menu_title = "Store module:"
+    exit_message = "Back to main menu"
+    ui.print_menu(menu_title, options, exit_message)
+
+
+def choose_inventory_module():
+    # inv = data_manager.get_table_from_file(table) 
+
+    title_list = [id, 'name', 'manufacturer', 'purchase_year', 'durability']
+
+    inputs = ui.get_inputs(["Please enter a number: "], "")
+    option = inputs[0]
+    if option == "0":
+        return False
+    if option == "1":
+        # ui.print_table(show_table('inventory/inventory.csv'), '')
+        ui.print_table(show_table('inventory/inventory.csv'), title_list)
+    if option == "2":
+        add('inventory/inventory.csv')
+
+
 def start_module():
     """
     Starts this module and displays its menu.
@@ -27,7 +52,14 @@ def start_module():
     Returns:
         None
     """
-
+    is_running = True
+    while is_running:
+        handle_menu_inventory_module()
+        try:
+            is_running = choose_inventory_module()
+        except KeyError as err:
+            ui.print_error_message(str(err))
+    print('I am in inventory module')   # delete in future!!
     # your code
 
 
@@ -41,8 +73,18 @@ def show_table(table):
     Returns:
         None
     """
+    inv = data_manager.get_table_from_file(table)
+    # print(inv)            # 2 versions of printing
+    # print()
+    # for elem in inv:
+        # print(elem)
+    print(inv)
+    print()
+    # for i in range(1, 11):        # printing in one line example
+    #     print(i, end='')
+    return inv
 
-    # your code
+    # ui.print_table(table, title_list)     # use in future!!
 
 
 def add(table):
@@ -57,8 +99,50 @@ def add(table):
     """
 
     # your code
+    new_record = []
+    # adding_new_record_text = '\033[1;34;49m ADDING NEW ALBUM'
+    # adding_new_record_text_alignment = adding_new_record_text.center(60)
+    # print(adding_new_record_text_alignment)
+    # print('\033[0;37;49m ')
 
-    return table
+    # use in future!!
+    # id = common.generate_random(table)
+    # input_class_list = [id, 'name', 'manufacturer', 'purchase_year', 'durability']
+    
+    input_class_list = ['id', 'name', 'manufacturer', 'purchase_year', 'durability']
+    for elem in input_class_list:
+        element = input(f'Input {elem} : ')
+        new_record.append(element)
+    print()
+    new_record_text = 'Your new record is: '
+    print(new_record_text)
+    print()
+    print(new_record)
+    print()
+
+    # inv = data_manager.get_table_from_file(table)
+
+    # record_to_file = ','.join(new_record)
+    # print('r to file:      ', record_to_file)
+    
+    # table.append(record_to_file)
+    # data_manager.write_table_to_file(inv, table)
+    # show_table(table)
+
+    # return table
+    
+    record_to_file = ','.join(new_record)
+    with open(table, 'a+') as fo:
+        print('It has been added to record list')
+        print(record_to_file)
+        fo.writelines('\n' + record_to_file)
+        # fo.writelines('%s' % '\n' + record_to_file)
+        fo.close()
+
+    
+
+    return new_record           # which one??
+    return table        # this one should be? why return table???
 
 
 def remove(table, id_):
