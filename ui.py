@@ -21,8 +21,9 @@ def print_table(table, title_list):
     Returns:
         None: This function doesn't return anything it only prints to console.
     """
-
-    # your goes code
+    print(table)
+    # your goes code bal balalsad
+    # testing merging
 
 
 def print_result(result, label):
@@ -110,3 +111,20 @@ def print_error_message(message):
     """
 
     # your code
+
+
+def headline(head):
+    headline = '\033[1;34;49m {}'.format(head)
+    headline_alignment = headline.center(60)
+    print(headline_alignment, '\033[0;37;49m ')
+    # print('\033[0;37;49m ')
+
+
+def print_enumerate_table(table):
+    for i, item in enumerate(table, 1):
+        print(i, '.', item)
+        # print(i, '.', item, end='')
+
+
+def blank_line():
+    print()

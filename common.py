@@ -47,6 +47,7 @@ def generate_random(table):
         return generated_id
 
 
+
 # OTHER HELPING FUNCTIONS:
 
 
@@ -138,3 +139,7 @@ def get_crm_table():
 def get_sales_table():
     table = data_manager.get_table_from_file("sales/sales.csv")
     return table
+
+def clear_terminal():
+    print("\033c")
+
