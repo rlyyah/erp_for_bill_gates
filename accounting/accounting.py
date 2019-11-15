@@ -18,32 +18,33 @@ import data_manager
 # common module
 import common
 
-DATA_TABLE_STRUCTURE = ['id','month','day','year','type[in = income, out = outflow]','amount']
+DATA_TABLE_STRUCTURE = ['id', 'month', 'day', 'year', 'type[in = income, out = outflow]', 'amount']
+
 
 def choose():
-    # inputs = ui.get_inputs(['What is your name? ', 'What is your surname? ', "What is your age? "], "Please provide your personal information")
     FILE_PATH = 'accounting/items.csv'
     table = data_manager.get_table_from_file(FILE_PATH)
-    #ui.print_table(ui.find_longest_width(table, DATA_TABLE_STRUCTURE),'Table')
     inputs = ui.get_inputs(["Please enter a number: "], "")
     option = inputs[0]
     if option == "1":
         show_table(table)
     elif option == "2":
-        data_manager.write_table_to_file(FILE_PATH,add(table))
+        data_manager.write_table_to_file(FILE_PATH, add(table))
     elif option == "3":
         ui.print_table(table, DATA_TABLE_STRUCTURE)
         to_be_removed = ui.get_inputs(['index'], 'remove')
-        data_manager.write_table_to_file(FILE_PATH,remove(table, find_id(table, to_be_removed)))
+        data_manager.write_table_to_file(FILE_PATH, remove(table, find_id(table, to_be_removed)))
     elif option == "4":
-        update('','')
+        ui.print_table(table, DATA_TABLE_STRUCTURE)
+        to_be_updated = ui.get_inputs(['index'], 'update')
+        data_manager.write_table_to_file(FILE_PATH, update(table, find_id(table, to_be_updated)))
     elif option == "5":
         table = data_manager.get_table_from_file(FILE_PATH)
-        #ui.print_table(which_year_max(table), "Max profits year")
+        ui.print_result(which_year_max(table), "Max profits year")
     elif option == "6":
         table = data_manager.get_table_from_file(FILE_PATH)
         year = ui.get_inputs(['year'], 'which year?')
-        #ui.print_table(avg_amount(table,year[0]),'avg year')
+        ui.print_result(avg_amount(table, year[0]),'avg year')
     elif option == "0":
         return False
     else:
@@ -110,8 +111,12 @@ def add(table):
     Returns:
         list: Table with a new record
     """
-    new_input = ui.get_inputs(DATA_TABLE_STRUCTURE, 'Accounting')
-    table.append(new_input)
+    data_table_structure = ['month','day','year','type[in = income, out = outflow]','amount']
+    line = [common.create_id()]
+    new_input = ui.get_inputs(data_table_structure, 'Accounting')
+    for el in new_input:
+        line.append(el)
+    table.append(line)
     # your code
 
     return table
@@ -146,9 +151,13 @@ def update(table, id_):
     Returns:
         list: table with updated record
     """
-
-    # your code
-
+    ID_POSITION = 0
+    data_table_structure = ['month', 'day', 'year', 'type[in = income, out = outflow]', 'amount']
+    new_input = ui.get_inputs(data_table_structure, 'Accounting')
+    for record in table:
+        if record[ID_POSITION] == id_:
+            for num, col in enumerate(new_input):
+                record[num+1] = col
     return table
 
 
@@ -181,8 +190,14 @@ def which_year_max(table):
                 year_dict[record[YEAR_POSITION]] = int(record[AMOUNT_POSITION])
             else:
                 year_dict[record[YEAR_POSITION]] = -int(record[AMOUNT_POSITION])
-    print(year_dict)
-    return year_dict
+    year_max = 0
+    which_year = ''
+    for el in year_dict.keys():
+        if year_dict[el] > year_max:
+            year_max = year_dict[el]
+            which_year = el
+
+    return which_year
 
     # your code
 
@@ -212,7 +227,6 @@ def avg_amount(table, year):
             else:
                 year_profit -= int(record[AMOUNT_POSITION])
         year_count += 1
-    
     return float(year_profit/year_count)
 
     # your code
