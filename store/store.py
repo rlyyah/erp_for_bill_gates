@@ -1,148 +1,103 @@
-""" Store module
-
-Data table structure:
-    * id (string): Unique and random generated identifier
-        at least 2 special characters (except: ';'), 2 number, 2 lower and 2 upper case letters)
-    * title (string): Title of the game
-    * manufacturer (string)
-    * price (number): Price in dollars
-    * in_stock (number)
-"""
-
-# everything you'll need is imported:
-# User interface module
+import os
 import ui
-# data manager module
 import data_manager
-# common module
 import common
 
 
-def handle_menu():
-    options = ["Show all"]
-    menu_title = "Store module"
-    exit_message = "Back to main menu"
-    ui.print_menu(menu_title, options, exit_message)
-
-
-def choose():
-    inputs = ui.get_inputs(["Please enter a number: "], "")
-    option = inputs[0]
-    if option == "0":
-        return False
-
-
 def start_module():
-    """
-    Starts this module and displays its menu.
-     * User can access default special features from here.
-     * User can go back to main menu from here.
-
-    Returns:
-        None
-    """
-    is_running = True
-    while is_running:
-        handle_menu()
-        try:
-            is_running = choose()
-        except KeyError as err:
-            ui.print_error_message(str(err))
-    print('jestem w store module')
-    # your code
+    while True:
+        datas = data_manager.get_table_from_file("store/games.csv")
+        options = [
+            "Display table",
+            "Add",
+            "Remove",
+            "Update",
+            "Available games of each manufacturer",
+            "Average amount of games by manufacturer"]
+        ui.print_menu("\nStore menu", options, "Main menu")
+        inputs = ui.get_inputs(["Please, choose an option: "], "")
+        option = inputs[0]
+        if option == "1":
+            os.system("clear")
+            show_table(datas)
+        elif option == "2":
+            os.system("clear")
+            add(datas)
+            write_to_file(datas)
+        elif option == "3":
+            os.system("clear")
+            given_id = ui.get_inputs(["Please, enter an ID to remove the line: "], "")
+            remove(datas, given_id)
+            write_to_file(datas)
+        elif option == "4":
+            os.system("clear")
+            update_id = ui.get_inputs(["Please, enter an ID to update the line: "], "")
+            update(datas, update_id)
+            write_to_file(datas)
+        elif option == "5":
+            os.system("clear")
+            ui.print_result(get_counts_by_manufacturers(datas), "The available games of each manufacturer:")
+        elif option == "6":
+            os.system("clear")
+            manufacturer = ui.get_inputs(["Please, choose a manufacturer to get the average amount of games: "], "")
+            ui.print_result(
+                get_average_by_manufacturer(
+                    datas,
+                    manufacturer[0]),
+                "The average amount of games by manufacturer:")
+        elif option == "0":
+            os.system("clear")
+            break
+        else:
+            ui.print_error_message("There is no such option.")
 
 
 def show_table(table):
-    """
-    Display a table
-
-    Args:
-        table (list): list of lists to be displayed.
-
-    Returns:
-        None
-    """
-
-    # your code
+    title_list = ["ID", "Title", "Manufacturer", "Price", "In stock"]
+    ui.print_table(table, title_list)
 
 
 def add(table):
-    """
-    Asks user for input and adds it into the table.
-
-    Args:
-        table (list): table to add new record to
-
-    Returns:
-        list: Table with a new record
-    """
-
-    # your code
-
-    return table
+    module_headers = ["Title: ", "Manufacturer: ", "Price: ", "In stock: "]
+    return common.common_add(table, module_headers)
 
 
 def remove(table, id_):
-    """
-    Remove a record with a given id from the table.
-
-    Args:
-        table (list): table to remove a record from
-        id_ (str): id of a record to be removed
-
-    Returns:
-        list: Table without specified record.
-    """
-
-    # your code
-
-    return table
+    return common.common_remove(table, id_, "store/games.csv")
 
 
 def update(table, id_):
-    """
-    Updates specified record in the table. Ask users for new data.
-
-    Args:
-        table: list in which record should be updated
-        id_ (str): id of a record to update
-
-    Returns:
-        list: table with updated record
-    """
-
-    # your code
-
-    return table
+    module_headers = ["Title: ", "Manufacturer: ", "Price: ", "In stock: "]
+    return common.common_update(table, id_, "inventory/inventory.csv", module_headers)
 
 
-# special functions:
-# ------------------
+def write_to_file(table):
+    return common.common_write_to_file(table, "store/games.csv")
+
 
 def get_counts_by_manufacturers(table):
-    """
-    Question: How many different kinds of game are available of each manufacturer?
-
-    Args:
-        table (list): data table to work on
-
-    Returns:
-         dict: A dictionary with this structure: { [manufacturer] : [count] }
-    """
-
-    # your code
+    manufacturers = []
+    manufacturer_dict = {}
+    for row in table:
+        manufacturers.append(row[2])
+    for manufacturer in manufacturers:
+        if manufacturer in manufacturer_dict:
+            manufacturer_dict[manufacturer] += 1
+        else:
+            manufacturer_dict[manufacturer] = 1
+    return manufacturer_dict
 
 
 def get_average_by_manufacturer(table, manufacturer):
-    """
-    Question: What is the average amount of games in stock of a given manufacturer?
-
-    Args:
-        table (list): data table to work on
-        manufacturer (str): Name of manufacturer
-
-    Returns:
-         number
-    """
-
-    # your code
+    manufacturers = []
+    in_stocks = []
+    total = 0
+    try:
+        for i in range(len(table)):
+            if manufacturer == table[i][2]:
+                in_stocks.append(int(table[i][4]))
+        for in_stock in in_stocks:
+            total += in_stock
+        return total / len(in_stocks)
+    except BaseException:
+        ui.print_error_message("There's no such manufacturer in table!")
