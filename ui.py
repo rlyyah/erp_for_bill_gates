@@ -52,6 +52,29 @@ def copy_table(table):
     return copied_table
 
 
+def find_longest_width(table, title_list):
+    width_list = []
+    for title in title_list:
+        width_list.append(len(title))
+    for line in table:
+        for num, col in enumerate(line):
+            if len(str(col)) > width_list[num]:
+                width_list[num] = len(str(col))
+    return width_list
+
+
+def copy_table(table):
+    copied_table = []
+    copied_line = []
+    ID_POSITION = 0
+    
+    for index, record in enumerate(table):
+        copied_line = record[:]
+        copied_line[ID_POSITION] = str(index+1)
+        copied_table.append(copied_line)
+    return copied_table
+
+
 def print_table(table, title_list):
     """
     Prints table with data.
@@ -89,7 +112,6 @@ def print_table(table, title_list):
             print(f'\\{top}/')
         else:
             print()
-
             print(spacer)    
         
     # your goes code bal balalsad
@@ -181,7 +203,7 @@ def print_error_message(message):
     Returns:
         None: This function doesn't return anything it only prints to console.
     """
-
+    print('Error! WARNING! WTF? '.format(message))
     # your code
 
 
