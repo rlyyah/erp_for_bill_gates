@@ -16,7 +16,6 @@ import data_manager
 import common
 
 
-
 # general variables
 file_name = 'crm/customers.csv'
 table = data_manager.get_table_from_file(file_name)
@@ -29,13 +28,13 @@ id = ''
 
 # variables for menu crm
 OPTION = ['0', '1', '2', '3', '4', '5', '6']
-title = "CRM_menu:"
+title = "CRM menu:"
 options = ["Show table",
-        "Add record",
-        "Remove record",
-        "Update data",
-        "Get longest name id",
-        "Get subscribed emails"]
+           "Add record",
+           "Remove record",
+           "Update data",
+           "Get longest name id",
+           "Get subscribed emails"]
 exit_message = "Back to main menu"
 
 
@@ -57,16 +56,45 @@ def choose():
     and starts options from module.
     No arg
     Returns nothing"""
+    FILE_PATH = 'crm/customers.csv'
+    # TITLE_LIST = ['id', 'name', 'email', 'subscription']
+    # INDEX_OF_FIRST_ELEMENT_OF_INPUTS_LIST = 0
+
+    table = data_manager.get_table_from_file(FILE_PATH)
     inputs = ui.get_inputs(['Enter a number: '], '')
     option = inputs[0]
     if option == "1":
+        common.clear_terminal()
+        ui.blank_line()
+        ui.headline('---- TABLE WITH INVENTORY ----')
+        ui.blank_line()
         show_table(table)
     elif option == "2":
-        add(table)
+        # add(table)
+        common.clear_terminal()
+        ui.blank_line()
+        data_manager.write_table_to_file(FILE_PATH, add(data_manager.get_table_from_file(FILE_PATH)))
     elif option == "3":
-        remove(table, id_)
+        # remove(table, id_)
+        common.clear_terminal()
+        ui.headline('---- TABLE WITH INVENTORY ----')
+        table = data_manager.get_table_from_file(FILE_PATH)
+        ui.blank_line()
+        show_table(data_manager.get_table_from_file(FILE_PATH))     # ONLY THIS NEEDEd TO PRINT TABLE RIGHT NOW
+        ui.blank_line()
+        ui.blank_line()
+        ui.headline('Removing item from inventory')
+        data_manager.write_table_to_file(FILE_PATH, remove(table, find_id(table, ui.get_inputs(['Insert index of file to remove'], "REMOVE"))))
     elif option == "4":
-        update(table, id_)
+        # update(table, id_)
+        common.clear_terminal()
+        ui.blank_line()
+        ui.blank_line()
+        ui.headline('EDITING EXISTING RECORD')
+        table = data_manager.get_table_from_file(FILE_PATH)
+        ui.blank_line()
+        show_table(data_manager.get_table_from_file(FILE_PATH))     # ONLY THIS NEEDEd TO PRINT TABLE RIGHT NOW
+        data_manager.write_table_to_file(FILE_PATH, update(table, find_id(table, ui.get_inputs(['Insert index of file to update'], "UPDATING"))))
     elif option == "5":
         ui.print_result(get_longest_name_id(table), 'Longest name: ')
     elif option == "6":
@@ -75,7 +103,6 @@ def choose():
         raise ValueError
     while option not in OPTION:
         raise KeyError
-        #menu_control()
 
 
 # Main crm module
@@ -99,6 +126,15 @@ def start_module():
             ui.print_error_message('There is no such option')
 
 
+def find_id(table, index):
+    INDEX_POSITION = 0
+    INDEX_OF_FIRST_ELEMENT_OF_INDEX_LIST = 0
+    NUMBER_TO_DISTRACT_BECAUES_INDEXING_IS_FROM_ZER0 = 1
+    number_of_id = table[int(index[INDEX_OF_FIRST_ELEMENT_OF_INDEX_LIST]) - NUMBER_TO_DISTRACT_BECAUES_INDEXING_IS_FROM_ZER0][INDEX_POSITION]
+    # number_of_id = number_of_id - 1
+    return number_of_id
+
+
 # shows all data in table
 def show_table(table):
     """
@@ -120,10 +156,27 @@ def add(table):
         table (list): table to add new record to
     Returns:
         list: Table with a new record
+
+    * id (string): Unique and random generated identifier
+      at least 2 special characters (except: ';'), 2 number, 2 lower and 2 upper case letters)
+    * name (string)
+    * email (string)
+    * subscribed (int): Is she/he subscribed to the newsletter? 1/0 = yes/no
     """
 
-    module_headers = ["Name: ", "E-mail: ", "Subscribed: "]
-    return common.common_add(table, module_headers)
+    ui.headline('Adding item to inventory')
+
+    id = common.generate_random(table)
+    # without id!!!!! :
+    # TITLE_LIST = ['id: ', 'What is the item? ', 'Who manufactured the item? ', 'What is the purchase year? [year]', 'What is the durability? [year] ']
+    TITLE_LIST = ['What is your name? ', 'What is your email? ', 'Do you want to subscribe to the newsletter?  1/0 = yes/no']
+    ask_input = ui.get_inputs(TITLE_LIST, 'Please enter information')
+
+    INDEX_OF_ID_TO_ADD_TO_ASK_INPUT = 0
+    ask_input.insert(INDEX_OF_ID_TO_ADD_TO_ASK_INPUT, id)
+    table.append(ask_input)
+
+    return table
 
 
 # removes record from table
@@ -137,7 +190,12 @@ def remove(table, id_):
         list: Table without specified record.
     """
 
-    return common.common_remove(table, id_, "crm/customers.csv")
+    ID_POSITION = 0
+    for index, record in enumerate(table):
+        if record[ID_POSITION] == id_:
+            table.pop(index)
+
+    return table
 
 
 # updates record in table
@@ -150,9 +208,29 @@ def update(table, id_):
     Returns:
         list: table with updated record
     """
+    TITLE_LIST = ['What is your name? ', 'What is your email? ', 'Do you want to subscribe to the newsletter? 1/0 = yes/no']
+    ask_input = ui.get_inputs(TITLE_LIST, 'Please enter information about an item')
 
-    module_headers = ["Name: ", "E-mail: ", "Subscribed: "]
-    return common.common_update(table, id_, "crm/customers.csv", module_headers)
+    # print('ask input: ', ask_input)
+    # print('ask input 0:', ask_input[0])
+
+    ID_POSITION = 0
+    INDEX_OF_SECOND_ELEMENT_OF_RECORD = 1
+    INDEX_OF_THIRD_ELEMENT_OF_RECORD = 2
+    INDEX_OF_FOURTH_ELEMENT_OF_RECORD = 3
+
+    INDEX_OF_FIRST_ELEMENT_OF_ASK_INPUT = 0
+    INDEX_OF_SECOND_ELEMENT_OF_ASK_INPUT = 1
+    INDEX_OF_THIRD_ELEMENT_OF_ASK_INPUT = 2
+
+    for record in table:
+        if record[ID_POSITION] == id_:
+            # print(record[ID_POSITION])
+            # print(record)
+            record[INDEX_OF_SECOND_ELEMENT_OF_RECORD] = ask_input[INDEX_OF_FIRST_ELEMENT_OF_ASK_INPUT]
+            record[INDEX_OF_THIRD_ELEMENT_OF_RECORD] = ask_input[INDEX_OF_SECOND_ELEMENT_OF_ASK_INPUT]
+            record[INDEX_OF_FOURTH_ELEMENT_OF_RECORD] = ask_input[INDEX_OF_THIRD_ELEMENT_OF_ASK_INPUT]
+    return table
 
 
 # function returns id of longest name in reverse alphabetical order
@@ -172,7 +250,7 @@ def get_longest_name_id(table):
         n = len(item)
         length_of_names.append(n)
     longest = max(length_of_names)
-    list_of_longest = []
+    # list_of_longest = []
     id_name_dict = {}
     for line in table:
         if len(line[name_index]) == longest:

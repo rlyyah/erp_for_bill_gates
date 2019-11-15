@@ -56,3 +56,7 @@ def convert_input_to_id(table, line_number):
     for i, id in enumerate(list_of_id, 1):
         if i == int(line_number):
             return list_of_id[i-1]
+
+
+def clear_terminal():
+    print("\033c")
