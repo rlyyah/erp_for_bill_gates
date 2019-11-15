@@ -23,22 +23,27 @@ DATA_TABLE_STRUCTURE = ['id','month','day','year','type[in = income, out = outfl
 def choose():
     # inputs = ui.get_inputs(['What is your name? ', 'What is your surname? ', "What is your age? "], "Please provide your personal information")
     FILE_PATH = 'accounting/items.csv'
+    table = data_manager.get_table_from_file(FILE_PATH)
+    #ui.print_table(ui.find_longest_width(table, DATA_TABLE_STRUCTURE),'Table')
     inputs = ui.get_inputs(["Please enter a number: "], "")
     option = inputs[0]
     if option == "1":
-        show_table(data_manager.get_table_from_file(FILE_PATH))
+        show_table(table)
     elif option == "2":
-        data_manager.write_table_to_file(FILE_PATH,add(data_manager.get_table_from_file(FILE_PATH)))
+        data_manager.write_table_to_file(FILE_PATH,add(table))
     elif option == "3":
-        table = data_manager.get_table_from_file(FILE_PATH)
-        ui.print_table(table, "Accounting")
-        data_manager.write_table_to_file(FILE_PATH,remove(table, find_id(table, ui.get_inputs(['index'], 'remove'))))
+        ui.print_table(table, DATA_TABLE_STRUCTURE)
+        to_be_removed = ui.get_inputs(['index'], 'remove')
+        data_manager.write_table_to_file(FILE_PATH,remove(table, find_id(table, to_be_removed)))
     elif option == "4":
         update('','')
     elif option == "5":
-        which_year_max('')
+        table = data_manager.get_table_from_file(FILE_PATH)
+        #ui.print_table(which_year_max(table), "Max profits year")
     elif option == "6":
-        avg_amount('','')
+        table = data_manager.get_table_from_file(FILE_PATH)
+        year = ui.get_inputs(['year'], 'which year?')
+        #ui.print_table(avg_amount(table,year[0]),'avg year')
     elif option == "0":
         return False
     else:
@@ -59,7 +64,7 @@ def handle_menu():
 
 def find_id(table, index):
     INDEX_POSITION = 0
-    id_ = table[int(index[0])][INDEX_POSITION]
+    id_ = table[int(index[0])-1][INDEX_POSITION]
     return id_
 
 def start_module():
@@ -91,7 +96,7 @@ def show_table(table):
     Returns:
         None
     """
-    ui.print_table(table, 'Accounting')
+    ui.print_table(table, DATA_TABLE_STRUCTURE)
     # your code
 
 
@@ -160,6 +165,24 @@ def which_year_max(table):
     Returns:
         number
     """
+    AMOUNT_POSITION = 5
+    TYPE_POSITION = 4
+    YEAR_POSITION = 3
+
+    year_dict = {}
+    for record in table:
+        if record[YEAR_POSITION] in year_dict:
+            if record[TYPE_POSITION] == 'in':
+                year_dict[record[YEAR_POSITION]] += int(record[AMOUNT_POSITION])
+            else:
+                year_dict[record[YEAR_POSITION]] -= int(record[AMOUNT_POSITION])
+        else:
+            if record[TYPE_POSITION] == 'in':
+                year_dict[record[YEAR_POSITION]] = int(record[AMOUNT_POSITION])
+            else:
+                year_dict[record[YEAR_POSITION]] = -int(record[AMOUNT_POSITION])
+    print(year_dict)
+    return year_dict
 
     # your code
 
@@ -175,5 +198,21 @@ def avg_amount(table, year):
     Returns:
         number
     """
+    AMOUNT_POSITION = 5
+    TYPE_POSITION = 4
+    YEAR_POSITION = 3
+
+    year_profit = 0
+    year_count = 0
+
+    for record in table:
+        if record[YEAR_POSITION] == year:
+            if record[TYPE_POSITION] == 'in':
+                year_profit += int(record[AMOUNT_POSITION])
+            else:
+                year_profit -= int(record[AMOUNT_POSITION])
+        year_count += 1
+    
+    return float(year_profit/year_count)
 
     # your code
