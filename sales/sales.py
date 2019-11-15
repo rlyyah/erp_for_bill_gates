@@ -39,9 +39,7 @@ def choose_inventory_module():
     inputs = ui.get_inputs(["Please enter a number: "], "")
     INDEX_OF_FIRST_ELEMENT_OF_INPUTS_LIST = 0
     option = inputs[INDEX_OF_FIRST_ELEMENT_OF_INPUTS_LIST]
-    if option == "0":
-        return False
-    elif option == "1":
+    if option == "1":
         common.clear_terminal()
         ui.blank_line()
         ui.headline('---- TABLE WITH SALES ----')
@@ -82,7 +80,7 @@ def choose_inventory_module():
         ui.print_table(get_items_sold_between(table, user_inputs[0], user_inputs[1], user_inputs[2], user_inputs[3], user_inputs[4], user_inputs[5]),TITLE_LIST)
     elif option == "0":
         # print('asdasdas')
-        # common.clear_terminal()
+        common.clear_terminal()
         # print('asdasdas')
         return False
     else:
