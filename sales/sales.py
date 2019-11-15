@@ -1,5 +1,4 @@
 """ Sales module
-
 Data table structure:
     * id (string): Unique and random generated identifier
         at least 2 special characters (except: ';'), 2 number, 2 lower and 2 upper case letters)
@@ -24,8 +23,8 @@ def handle_menu_inventory_module():
                "Add item to table",
                "Remove item from the table",
                "Update item in table",
-               "NOT DONE",
-               'NOT DONE']
+               "Get lowest price item id",
+               'Get items sold between']
 
     menu_title = "Sales module menu"
     menu_title = ui.return_headline_for_menu_title_(menu_title)
@@ -76,11 +75,11 @@ def choose_inventory_module():
         show_table(data_manager.get_table_from_file(FILE_PATH))     # ONLY THIS NEEDEd TO PRINT TABLE RIGHT NOW
         data_manager.write_table_to_file(FILE_PATH, update(table, find_id(table, ui.get_inputs(['Insert index of file to update'], "UPDATING"))))
     elif option == "5":
-        # TODO
-        pass
+        ui.print_result(get_lowest_price_item_id(table),"Lowest price ID")
     elif option == "6":
-        pass
-        # TODO
+        TITLE_LIST = ['id', 'title', 'price', 'month', 'day', 'year']
+        user_inputs = ui.get_inputs(['month_from', 'day_from', 'year_from', 'month_to', 'day_to', 'year_to'],'get_items_sold_between')
+        ui.print_table(get_items_sold_between(table, user_inputs[0], user_inputs[1], user_inputs[2], user_inputs[3], user_inputs[4], user_inputs[5]),TITLE_LIST)
     elif option == "0":
         # print('asdasdas')
         # common.clear_terminal()
@@ -107,7 +106,6 @@ def start_module():
     Starts this module and displays its menu.
      * User can access default special features from here.
      * User can go back to main menu from here.
-
     Returns:
         None
     """
@@ -123,10 +121,8 @@ def start_module():
 def show_table(table):
     """
     Display a table
-
     Args:
         table (list): list of lists to be displayed.
-
     Returns:
         None
     """
@@ -138,10 +134,8 @@ def show_table(table):
 def add(table):
     """
     Asks user for input and adds it into the table.
-
     Args:
         table (list): table to add new record to
-
     Returns:
         list: Table with a new record
     """
@@ -164,11 +158,9 @@ def add(table):
 def remove(table, id_):
     """
     Remove a record with a given id from the table.
-
     Args:
         table (list): table to remove a record from
         id_ (str): id of a record to be removed
-
     Returns:
         list: Table without specified record.
     """
@@ -184,11 +176,9 @@ def remove(table, id_):
 def update(table, id_):
     """
     Updates specified record in the table. Ask users for new data.
-
     Args:
         table (list): list in which record should be updated
         id_ (str): id of a record to update
-
     Returns:
         list: table with updated record
     """
@@ -232,21 +222,31 @@ def get_lowest_price_item_id(table):
     """
     Question: What is the id of the item that was sold for the lowest price?
     if there are more than one item at the lowest price, return the last item by alphabetical order of the title
-
     Args:
         table (list): data table to work on
-
     Returns:
          string: id
     """
+    PRICE_POSITION = 2
+    FIRST_ITEM = 0
+    lowest_price = int(table[FIRST_ITEM][PRICE_POSITION])
+    lowest_index = 0
 
+    for index, record in enumerate(table):
+        if int(record[PRICE_POSITION]) < lowest_price:
+            lowest_price = int(record[PRICE_POSITION])
+            lowest_index = index
+
+    lowest_id = find_id(table,str(lowest_index))
+
+    return lowest_id    
+        
     # your code
 
 
 def get_items_sold_between(table, month_from, day_from, year_from, month_to, day_to, year_to):
     """
     Question: Which items are sold between two given dates? (from_date < sale_date < to_date)
-
     Args:
         table (list): data table to work on
         month_from (int)
@@ -255,9 +255,26 @@ def get_items_sold_between(table, month_from, day_from, year_from, month_to, day
         month_to (int)
         day_to (int)
         year_to (int)
-
     Returns:
         list: list of lists (the filtered table)
     """
+    line = []
+    line_wrapper = []
+    MONTH_POSITION = 3
+    DAY_POSITION = 4
+    YEAR_POSITION = 5
+    # 3 4 5
+    for record in table:
+        if int(record[5]) >= int(year_from): 
+            if int(record[5]) <= int(year_to):
+                if int(record[3]) >= int(month_from):
+                    if int(record[3]) <= int(month_to):
+                        if int(record[4]) >= int(day_from): 
+                            if int(record[4]) <= int(day_to):
+                                line = record[:]
+                                line_wrapper.append(line)
+
+    return line_wrapper
+
 
     # your code
