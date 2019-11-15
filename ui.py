@@ -75,6 +75,20 @@ def copy_table(table):
     return copied_table
 
 
+def find_longest_width(table, title_list):
+    print(table)
+    print()
+    width_list = []
+    for title in title_list:
+        width_list.append(len(title))
+    for line in table:
+        for num, col in enumerate(line):
+            col = str(col)      # error - int object has no attribute len! had to change to str!
+            if len(col) > width_list[num]:
+                width_list[num] = len(col)
+    return width_list
+
+
 def print_table(table, title_list):
     """
     Prints table with data.
@@ -92,7 +106,6 @@ def print_table(table, title_list):
     Returns:
         None: This function doesn't return anything it only prints to console.
     """
-
     table_copy = copy_table(table) 
     width_list = find_longest_width(table_copy, title_list)
     top = '-' * (sum_list_of_nums(width_list)+len(width_list)*2+len(width_list)+1-2)
@@ -129,11 +142,9 @@ def print_result(result, label):
     Returns:
         None: This function doesn't return anything it only prints to console.
     """
-
     print(label)
-    print()
+    print("\n")
     print(result)
-    
 
 def print_menu(title, list_options, exit_message):
     """
@@ -205,8 +216,8 @@ def print_error_message(message):
     """
     print('Error! WARNING! WTF? '.format(message))
     # your code
-
-
+    
+    
 def headline(head):
     headline = '\033[1;34;49m {}'.format(head)
     headline_alignment = headline.center(60)
@@ -215,6 +226,13 @@ def headline(head):
 
 def print_enumerate_table(table):
     for i, item in enumerate(table, 1):
+
+        print(i, '.', item)
+        
+
+def blank_line():
+    print()
+
         print('{}. {}'.format(i, item))
 
 
@@ -230,3 +248,4 @@ def return_headline_for_menu_title_(head):
     head_centered = head.center(60)
     headlne2 = '\033[1;34;49m {} \033[0;37;49m'.format(head_centered)
     return headlne2
+
