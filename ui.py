@@ -69,8 +69,10 @@ def print_result(result, label):
     Returns:
         None: This function doesn't return anything it only prints to console.
     """
+    print(label)
+    print("\n")
+    print(result)
 
-    # your code
 
 
 def print_menu(title, list_options, exit_message):

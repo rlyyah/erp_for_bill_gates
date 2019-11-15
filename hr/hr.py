@@ -54,7 +54,9 @@ def choose():
         ui.blank_line()
         data_manager.write_table_to_file("hr/persons.csv", add(table))
     elif option == "3":
-        update()
+        show_table(table)
+        data_manager.write_table_to_file("hr/persons.csv", update(table, find_id(table, ui.get_inputs(['Insert index of file to update'], "UPDATE"))))
+
     elif option == "4":
         common.clear_terminal()
         ui.headline('----  Persons Table  ----')
@@ -66,10 +68,11 @@ def choose():
         data_manager.write_table_to_file("hr/persons.csv", remove(table, find_id(table, ui.get_inputs(['Insert index of file to remove'], "REMOVE"))))
         
     elif option == "5":
-        get_oldest_person(table)
+        ui.print_result(get_oldest_person(table), "Oldest people")
 
     elif option == "6":
-        get_persons_closest_to_average(table)
+        ui.print_result(get_persons_closest_to_average(table), "Average persons")
+
     elif option == "0":
         sys.exit(0)
     else:
@@ -157,8 +160,19 @@ def update(table, id_):
         list: table with updated record
     """
 
-    # your code
+    TITLE_LIST = ['What is name? ', 'What is born year?']
+    ask_input = ui.get_inputs(TITLE_LIST, 'Please enter information about a person')
+    ID_POSITION = 0
+    INDEX_OF_SECOND_ELEMENT_OF_RECORD = 1
+    INDEX_OF_THIRD_ELEMENT_OF_RECORD = 2
 
+    INDEX_OF_FIRST_ELEMENT_OF_ASK_INPUT = 0
+    INDEX_OF_SECOND_ELEMENT_OF_ASK_INPUT = 1
+
+    for record in table:
+        if record[ID_POSITION] == id:
+            record[INDEX_OF_SECOND_ELEMENT_OF_RECORD] = ask_input[INDEX_OF_FIRST_ELEMENT_OF_ASK_INPUT]
+            record[INDEX_OF_THIRD_ELEMENT_OF_RECORD] = ask_input[INDEX_OF_SECOND_ELEMENT_OF_ASK_INPUT]
     return table
 
 
@@ -178,9 +192,7 @@ def get_oldest_person(table):
         for i in range(len(year_list)):
             if max == year_list[i]:
                 list_oldest_persons.append(table[i][1])
-            else:
-                pass
-    print(list_oldest_persons)
+
     return list_oldest_persons
     """
     Question: Who is the oldest person?
@@ -212,14 +224,14 @@ def get_persons_closest_to_average(table):
             min_diff = diff
             closest = i
             a = year_list.index(closest)
-    print(table[a][1])
+    
     list_avg_pers = []
     for i in range(len(year_list)):
         if closest == year_list[i]:
             list_avg_pers.append(table[i][1])
         else:
             pass
-    print(list_avg_pers)
+    
     return list_avg_pers
     
     """
