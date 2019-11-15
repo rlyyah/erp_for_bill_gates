@@ -35,7 +35,6 @@ def handle_menu_inventory_module():
 
 def choose_inventory_module():
     FILE_PATH = 'sales/sales.csv'
-    TITLE_LIST = ['id', 'title', 'price', 'month', 'day', 'year']
 
     table = data_manager.get_table_from_file(FILE_PATH)
     inputs = ui.get_inputs(["Please enter a number: "], "")
