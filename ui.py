@@ -1,10 +1,32 @@
 """ User Interface (UI) module """
 
 
+def find_longest_width(table, title_list):
+    width_list = []
+    for title in title_list:
+        width_list.append(len(title))
+    for line in table:
+        for num, col in enumerate(line):
+            if len(str(col)) > width_list[num]:
+                width_list[num] = len(str(col))
+    return width_list
+
+
+def copy_table(table):
+    copied_table = []
+    copied_line = []
+    ID_POSITION = 0
+    
+    for index, record in enumerate(table):
+        copied_line = record[:]
+        copied_line[ID_POSITION] = str(index+1)
+        copied_table.append(copied_line)
+    return copied_table
+
+
 def print_table(table, title_list):
     """
     Prints table with data.
-
     Example:
         /-----------------------------------\
         |   id   |      title     |  type   |
@@ -13,16 +35,34 @@ def print_table(table, title_list):
         |--------|----------------|---------|
         |   1    |       fo       |    fps  |
         \-----------------------------------/
-
     Args:
         table (list): list of lists - table to display
         title_list (list): list containing table headers
-
     Returns:
         None: This function doesn't return anything it only prints to console.
     """
-
-    # your goes code
+    # print(table)
+    table_copy = copy_table(table) 
+    # print(table)
+    width_list = find_longest_width(table_copy, title_list)
+    top = '-' * (sum(width_list)+len(width_list)*2+len(width_list)+1-2)
+    spacer = top + 2 * '-' 
+    print(f'/{top}\\')
+    print('|', end='')
+    for num, title in enumerate(title_list):
+        print(f"{title.center(width_list[num]+2)}|", end='')
+    print()
+    print(spacer)
+    for record in table_copy:
+        print('|', end='')
+        for col in range(len(record)):
+            print(f"{str(record[col]).center(width_list[col]+2)}|", end='')
+        if table_copy.index(record) == len(table_copy)-1:
+            print()
+            print(f'\\{top}/')
+        else:
+            print()
+            print(spacer)  
 
 
 def print_result(result, label):
@@ -36,8 +76,7 @@ def print_result(result, label):
     Returns:
         None: This function doesn't return anything it only prints to console.
     """
-
-    # your code
+    print('{} {} '.format(result, label))
 
 
 def print_menu(title, list_options, exit_message):
@@ -110,3 +149,28 @@ def print_error_message(message):
     """
 
     # your code
+
+
+def headline(head):
+    headline = '\033[1;34;49m {}'.format(head)
+    headline_alignment = headline.center(60)
+    print(headline_alignment, '\033[0;37;49m ')
+    
+
+def print_enumerate_table(table):
+    for i, item in enumerate(table, 1):
+        print('{}. {}'.format(i, item))
+
+
+def blank_line():
+    print() 
+
+
+def print_dictionary(dict):
+    print(dict)
+
+
+def return_headline_for_menu_title_(head):
+    head_centered = head.center(60)
+    headlne2 = '\033[1;34;49m {} \033[0;37;49m'.format(head_centered)
+    return headlne2
