@@ -16,6 +16,8 @@ from sales import sales
 # Customer Relationship Management (CRM) module
 from crm import crm
 
+from store import store
+
 
 def choose():
     # inputs = ui.get_inputs(['What is your name? ', 'What is your surname? ', "What is your age? "], "Please provide your personal information")

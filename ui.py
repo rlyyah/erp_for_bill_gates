@@ -1,5 +1,33 @@
 """ User Interface (UI) module """
+def find_longest_width(table, title_list):
+    width_list = []
+    for title in title_list:
+        width_list.append(len(title))
+    for line in table:
+        for num, col in enumerate(line):
+            if len(str(col)) > width_list[num]:
+                width_list[num] = len(str(col))
+    return width_list
 
+
+def copy_table(table):
+    copied_table = []
+    copied_line = []
+    ID_POSITION = 0
+    
+    for index, record in enumerate(table):
+        copied_line = record[:]
+        copied_line[ID_POSITION] = str(index+1)
+        copied_table.append(copied_line)
+    return copied_table
+
+
+def sum_list_of_nums(list_to_sum):
+    count = 0
+    for num in list_to_sum:
+        count += num
+    
+    return count
 
 def find_longest_width(table, title_list):
     width_list = []
@@ -41,11 +69,10 @@ def print_table(table, title_list):
     Returns:
         None: This function doesn't return anything it only prints to console.
     """
-    # print(table)
+
     table_copy = copy_table(table) 
-    # print(table)
     width_list = find_longest_width(table_copy, title_list)
-    top = '-' * (sum(width_list)+len(width_list)*2+len(width_list)+1-2)
+    top = '-' * (sum_list_of_nums(width_list)+len(width_list)*2+len(width_list)+1-2)
     spacer = top + 2 * '-' 
     print(f'/{top}\\')
     print('|', end='')
@@ -62,7 +89,11 @@ def print_table(table, title_list):
             print(f'\\{top}/')
         else:
             print()
-            print(spacer)  
+
+            print(spacer)    
+        
+    # your goes code bal balalsad
+    # testing merging
 
 
 def print_result(result, label):
@@ -76,8 +107,11 @@ def print_result(result, label):
     Returns:
         None: This function doesn't return anything it only prints to console.
     """
-    print('{} {} '.format(result, label))
 
+    print(label)
+    print()
+    print(result)
+    
 
 def print_menu(title, list_options, exit_message):
     """
@@ -155,7 +189,7 @@ def headline(head):
     headline = '\033[1;34;49m {}'.format(head)
     headline_alignment = headline.center(60)
     print(headline_alignment, '\033[0;37;49m ')
-    
+
 
 def print_enumerate_table(table):
     for i, item in enumerate(table, 1):
