@@ -48,8 +48,10 @@ def handle_menu():
                "Accounting manager",
                "Sales manager",
                "Customer Relationship Management (CRM)"]
-
-    ui.print_menu("Main menu", options, "Exit program")
+    
+    menu_title = "Main menu"
+    menu_title = ui.return_headline_for_menu_title_(menu_title)
+    ui.print_menu(menu_title, options, "Exit program")
 
 
 def main():
