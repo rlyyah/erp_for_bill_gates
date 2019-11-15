@@ -142,4 +142,3 @@ def get_sales_table():
 
 def clear_terminal():
     print("\033c")
-
