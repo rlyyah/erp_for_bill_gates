@@ -22,6 +22,13 @@ def copy_table(table):
     return copied_table
 
 
+def sum_list_of_nums(list_to_sum):
+    count = 0
+    for num in list_to_sum:
+        count += num
+    
+    return count
+
 def print_table(table, title_list):
     """
     Prints table with data.
@@ -46,7 +53,7 @@ def print_table(table, title_list):
     table_copy = copy_table(table) 
     print(table)
     width_list = find_longest_width(table_copy, title_list)
-    top = '-' * (sum(width_list)+len(width_list)*2+len(width_list)+1-2)
+    top = '-' * (sum_list_of_nums(width_list)+len(width_list)*2+len(width_list)+1-2)
     spacer = top + 2 * '-' 
     print(f'/{top}\\')
     print('|', end='')
