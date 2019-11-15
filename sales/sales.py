@@ -221,7 +221,7 @@ def update(table, id_):
             record[INDEX_OF_THIRD_ELEMENT_OF_RECORD] = ask_input[INDEX_OF_SECOND_ELEMENT_OF_ASK_INPUT]
             record[INDEX_OF_FOURTH_ELEMENT_OF_RECORD] = ask_input[INDEX_OF_THIRD_ELEMENT_OF_ASK_INPUT]
             record[INDEX_OF_FIVE_ELEMENT_OF_RECORD] = ask_input[INDEX_OF_FOURTH_ELEMENT_OF_ASK_INPUT]
-            record[INDEX_OF_SIX_ELEMENT_OF_RECORD] = ask_input[INDEX_OF_FIVE_ELEMENT_OF_RECORD]
+            record[INDEX_OF_SIX_ELEMENT_OF_RECORD] = ask_input[INDEX_OF_FIVE_ELEMENT_OF_ASK_INPUT]
 
     return table
 
